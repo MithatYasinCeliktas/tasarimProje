@@ -1,0 +1,1970 @@
+{
+  "proposed_bimamba_metrics": {
+    "overall": {
+      "celltype": {
+        "accuracy": 96.37,
+        "weighted_f1": 96.39,
+        "macro_f1": 96.32,
+        "roc_auc": 99.92,
+        "ece_percent": 0.83,
+        "mean_confidence": 97.14
+      },
+      "health": {
+        "accuracy": 98.52,
+        "weighted_f1": 98.52,
+        "macro_f1": 97.59,
+        "roc_auc": 99.83,
+        "ece_percent": 0.42,
+        "mean_confidence": 98.09
+      },
+      "disease": {
+        "accuracy": 98.46,
+        "weighted_f1": 98.46,
+        "macro_f1": 96.24,
+        "roc_auc": 99.89,
+        "ece_percent": 0.33,
+        "mean_confidence": 98.21
+      },
+      "cancer_bin": {
+        "accuracy": 99.95,
+        "weighted_f1": 99.95,
+        "macro_f1": 99.94,
+        "roc_auc": 100.0,
+        "ece_percent": 0.04,
+        "mean_confidence": 99.99
+      },
+      "cancer_var": {
+        "accuracy": 97.23,
+        "weighted_f1": 97.22,
+        "macro_f1": 89.14,
+        "roc_auc": 99.74,
+        "ece_percent": 0.64,
+        "mean_confidence": 97.34
+      },
+      "csc": {
+        "accuracy": 98.16,
+        "weighted_f1": 98.17,
+        "macro_f1": 96.99,
+        "roc_auc": 99.81,
+        "ece_percent": 0.48,
+        "mean_confidence": 98.3
+      },
+      "composite_mean_accuracy": 98.11
+    },
+    "single_cell_only": {
+      "celltype": {
+        "accuracy": 95.93,
+        "weighted_f1": 95.97,
+        "macro_f1": 95.76,
+        "roc_auc": 99.9,
+        "ece_percent": 1.04,
+        "mean_confidence": 96.94
+      },
+      "health": {
+        "accuracy": 98.37,
+        "weighted_f1": 98.37,
+        "macro_f1": 97.22,
+        "roc_auc": 99.8,
+        "ece_percent": 0.4,
+        "mean_confidence": 98.0
+      },
+      "disease": {
+        "accuracy": 98.3,
+        "weighted_f1": 98.31,
+        "macro_f1": 95.6,
+        "roc_auc": 99.86,
+        "ece_percent": 0.32,
+        "mean_confidence": 98.12
+      },
+      "cancer_bin": {
+        "accuracy": 99.95,
+        "weighted_f1": 99.95,
+        "macro_f1": 99.93,
+        "roc_auc": 100.0,
+        "ece_percent": 0.05,
+        "mean_confidence": 99.99
+      },
+      "cancer_var": {
+        "accuracy": 96.89,
+        "weighted_f1": 96.86,
+        "macro_f1": 86.01,
+        "roc_auc": 99.65,
+        "ece_percent": 0.68,
+        "mean_confidence": 97.24
+      },
+      "csc": {
+        "accuracy": 98.07,
+        "weighted_f1": 98.07,
+        "macro_f1": 96.42,
+        "roc_auc": 99.78,
+        "ece_percent": 0.43,
+        "mean_confidence": 98.16
+      },
+      "composite_mean_accuracy": 97.92
+    },
+    "bulk_rnaseq_only": {
+      "celltype": {
+        "accuracy": 99.89,
+        "weighted_f1": 99.89,
+        "macro_f1": 99.8,
+        "roc_auc": 100.0,
+        "ece_percent": 1.27,
+        "mean_confidence": 98.75
+      },
+      "health": {
+        "accuracy": 99.68,
+        "weighted_f1": 99.68,
+        "macro_f1": 99.61,
+        "roc_auc": 100.0,
+        "ece_percent": 1.03,
+        "mean_confidence": 98.79
+      },
+      "disease": {
+        "accuracy": 99.68,
+        "weighted_f1": 99.68,
+        "macro_f1": 99.45,
+        "roc_auc": 100.0,
+        "ece_percent": 0.91,
+        "mean_confidence": 98.9
+      },
+      "cancer_bin": {
+        "accuracy": 100.0,
+        "weighted_f1": 100.0,
+        "macro_f1": 100.0,
+        "roc_auc": 100.0,
+        "ece_percent": 0.0,
+        "mean_confidence": 100.0
+      },
+      "cancer_var": {
+        "accuracy": 100.0,
+        "weighted_f1": 100.0,
+        "macro_f1": 100.0,
+        "roc_auc": 100.0,
+        "ece_percent": 1.86,
+        "mean_confidence": 98.14
+      },
+      "csc": {
+        "accuracy": 98.93,
+        "weighted_f1": 98.93,
+        "macro_f1": 98.89,
+        "roc_auc": 99.95,
+        "ece_percent": 1.24,
+        "mean_confidence": 99.46
+      },
+      "composite_mean_accuracy": 99.7
+    },
+    "confusion_matrices": {
+      "disease": [
+        [
+          1548,
+          3,
+          64,
+          2
+        ],
+        [
+          5,
+          355,
+          0,
+          0
+        ],
+        [
+          54,
+          0,
+          541,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          5911
+        ]
+      ],
+      "cancer_var": [
+        [
+          2571,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          4108,
+          3,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          183,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          183,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          296,
+          5,
+          7,
+          2,
+          2,
+          7,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          17,
+          164,
+          14,
+          3,
+          15,
+          3,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          7,
+          6,
+          160,
+          6,
+          4,
+          3,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          1,
+          212,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          8,
+          10,
+          8,
+          3,
+          155,
+          3,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9,
+          3,
+          2,
+          1,
+          4,
+          142,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          7,
+          13,
+          7,
+          0,
+          6,
+          2,
+          77
+        ]
+      ],
+      "celltype": [
+        [
+          855,
+          73,
+          0,
+          2,
+          0,
+          1,
+          0,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          11,
+          376,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          772,
+          4,
+          32,
+          3,
+          2,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          8,
+          644,
+          0,
+          1,
+          5,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          27,
+          1,
+          519,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6,
+          0,
+          1,
+          1930,
+          44,
+          1,
+          0,
+          0,
+          0,
+          1,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          38,
+          594,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          1,
+          0,
+          0,
+          0,
+          350,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          634,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          371,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          319,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          218,
+          7,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          8,
+          180,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          416
+        ]
+      ]
+    }
+  },
+  "baseline_no_bimamba_metrics": {
+    "overall": {
+      "celltype": {
+        "accuracy": 91.21,
+        "weighted_f1": 91.23,
+        "macro_f1": 89.97,
+        "roc_auc": 99.7,
+        "ece_percent": 0.85,
+        "mean_confidence": 91.17
+      },
+      "health": {
+        "accuracy": 97.4,
+        "weighted_f1": 97.37,
+        "macro_f1": 95.71,
+        "roc_auc": 99.62,
+        "ece_percent": 0.69,
+        "mean_confidence": 96.75
+      },
+      "disease": {
+        "accuracy": 97.43,
+        "weighted_f1": 97.47,
+        "macro_f1": 93.81,
+        "roc_auc": 99.73,
+        "ece_percent": 0.79,
+        "mean_confidence": 96.64
+      },
+      "cancer_bin": {
+        "accuracy": 99.86,
+        "weighted_f1": 99.86,
+        "macro_f1": 99.83,
+        "roc_auc": 100.0,
+        "ece_percent": 0.07,
+        "mean_confidence": 99.89
+      },
+      "cancer_var": {
+        "accuracy": 93.24,
+        "weighted_f1": 93.17,
+        "macro_f1": 74.25,
+        "roc_auc": 98.82,
+        "ece_percent": 0.95,
+        "mean_confidence": 93.21
+      },
+      "csc": {
+        "accuracy": 97.53,
+        "weighted_f1": 97.54,
+        "macro_f1": 95.95,
+        "roc_auc": 99.7,
+        "ece_percent": 0.7,
+        "mean_confidence": 96.95
+      },
+      "composite_mean_accuracy": 96.11
+    },
+    "single_cell_only": {
+      "celltype": {
+        "accuracy": 90.19,
+        "weighted_f1": 90.21,
+        "macro_f1": 88.36,
+        "roc_auc": 99.63,
+        "ece_percent": 0.87,
+        "mean_confidence": 90.62
+      },
+      "health": {
+        "accuracy": 97.59,
+        "weighted_f1": 97.57,
+        "macro_f1": 95.82,
+        "roc_auc": 99.64,
+        "ece_percent": 0.64,
+        "mean_confidence": 96.95
+      },
+      "disease": {
+        "accuracy": 97.56,
+        "weighted_f1": 97.6,
+        "macro_f1": 93.64,
+        "roc_auc": 99.75,
+        "ece_percent": 0.72,
+        "mean_confidence": 96.84
+      },
+      "cancer_bin": {
+        "accuracy": 99.84,
+        "weighted_f1": 99.84,
+        "macro_f1": 99.8,
+        "roc_auc": 100.0,
+        "ece_percent": 0.09,
+        "mean_confidence": 99.88
+      },
+      "cancer_var": {
+        "accuracy": 93.09,
+        "weighted_f1": 92.92,
+        "macro_f1": 69.59,
+        "roc_auc": 98.63,
+        "ece_percent": 0.94,
+        "mean_confidence": 93.17
+      },
+      "csc": {
+        "accuracy": 97.38,
+        "weighted_f1": 97.39,
+        "macro_f1": 95.14,
+        "roc_auc": 99.62,
+        "ece_percent": 0.76,
+        "mean_confidence": 96.72
+      },
+      "composite_mean_accuracy": 95.94
+    },
+    "bulk_rnaseq_only": {
+      "celltype": {
+        "accuracy": 99.47,
+        "weighted_f1": 99.47,
+        "macro_f1": 99.43,
+        "roc_auc": 100.0,
+        "ece_percent": 4.09,
+        "mean_confidence": 95.6
+      },
+      "health": {
+        "accuracy": 95.83,
+        "weighted_f1": 95.8,
+        "macro_f1": 94.85,
+        "roc_auc": 99.4,
+        "ece_percent": 2.88,
+        "mean_confidence": 95.21
+      },
+      "disease": {
+        "accuracy": 96.37,
+        "weighted_f1": 96.44,
+        "macro_f1": 93.96,
+        "roc_auc": 99.54,
+        "ece_percent": 2.53,
+        "mean_confidence": 95.0
+      },
+      "cancer_bin": {
+        "accuracy": 100.0,
+        "weighted_f1": 100.0,
+        "macro_f1": 100.0,
+        "roc_auc": 100.0,
+        "ece_percent": 0.06,
+        "mean_confidence": 99.94
+      },
+      "cancer_var": {
+        "accuracy": 94.44,
+        "weighted_f1": 94.44,
+        "macro_f1": 87.37,
+        "roc_auc": 99.5,
+        "ece_percent": 2.82,
+        "mean_confidence": 93.5
+      },
+      "csc": {
+        "accuracy": 98.72,
+        "weighted_f1": 98.72,
+        "macro_f1": 98.67,
+        "roc_auc": 99.96,
+        "ece_percent": 0.57,
+        "mean_confidence": 98.8
+      },
+      "composite_mean_accuracy": 97.47
+    },
+    "confusion_matrices": {
+      "disease": [
+        [
+          1474,
+          7,
+          132,
+          4
+        ],
+        [
+          17,
+          343,
+          0,
+          0
+        ],
+        [
+          50,
+          0,
+          544,
+          1
+        ],
+        [
+          6,
+          0,
+          1,
+          5907
+        ]
+      ],
+      "cancer_var": [
+        [
+          2567,
+          2,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          4111,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          183,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          183,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          245,
+          26,
+          15,
+          11,
+          20,
+          7,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          44,
+          101,
+          45,
+          3,
+          17,
+          4,
+          4
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          39,
+          32,
+          84,
+          13,
+          13,
+          6,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          24,
+          7,
+          7,
+          176,
+          8,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          45,
+          13,
+          13,
+          10,
+          101,
+          8,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          10,
+          13,
+          9,
+          6,
+          10,
+          115,
+          2
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          21,
+          11,
+          12,
+          3,
+          10,
+          7,
+          46
+        ]
+      ],
+      "celltype": [
+        [
+          815,
+          106,
+          0,
+          2,
+          0,
+          1,
+          0,
+          7,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          27,
+          359,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          681,
+          19,
+          101,
+          8,
+          1,
+          5,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          15,
+          630,
+          0,
+          6,
+          5,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          75,
+          2,
+          472,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          12,
+          21,
+          0,
+          1883,
+          55,
+          6,
+          0,
+          0,
+          0,
+          3,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          6,
+          0,
+          81,
+          544,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          9,
+          4,
+          0,
+          7,
+          2,
+          330,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          632,
+          5,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          7,
+          1,
+          4,
+          17,
+          333,
+          1,
+          1,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          311,
+          7,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          7,
+          187,
+          28,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          14,
+          28,
+          147,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          416
+        ]
+      ]
+    }
+  },
+  "calibrated_temperatures": {
+    "celltype": 1.1,
+    "health": 1.1,
+    "disease": 1.1,
+    "cancer_bin": 0.5,
+    "cancer_var": 1.3,
+    "csc": 0.5
+  },
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 5.1614,
+      "val_composite_acc": 95.26,
+      "val_details": {
+        "celltype": {
+          "accuracy": 95.66,
+          "weighted_f1": 95.66,
+          "macro_f1": 95.66,
+          "roc_auc": 95.66,
+          "ece_percent": 0.0,
+          "mean_confidence": 86.79
+        },
+        "health": {
+          "accuracy": 94.36,
+          "weighted_f1": 94.36,
+          "macro_f1": 94.36,
+          "roc_auc": 94.36,
+          "ece_percent": 0.0,
+          "mean_confidence": 90.23
+        },
+        "disease": {
+          "accuracy": 94.93,
+          "weighted_f1": 94.93,
+          "macro_f1": 94.93,
+          "roc_auc": 94.93,
+          "ece_percent": 0.0,
+          "mean_confidence": 91.63
+        },
+        "cancer_bin": {
+          "accuracy": 99.97,
+          "weighted_f1": 99.97,
+          "macro_f1": 99.97,
+          "roc_auc": 99.97,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.8
+        },
+        "cancer_var": {
+          "accuracy": 91.45,
+          "weighted_f1": 91.45,
+          "macro_f1": 91.45,
+          "roc_auc": 91.45,
+          "ece_percent": 0.0,
+          "mean_confidence": 86.58
+        },
+        "csc": {
+          "accuracy": 95.21,
+          "weighted_f1": 95.21,
+          "macro_f1": 95.21,
+          "roc_auc": 95.21,
+          "ece_percent": 0.0,
+          "mean_confidence": 88.14
+        },
+        "composite_mean_accuracy": 95.26
+      }
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.4581,
+      "val_composite_acc": 95.78,
+      "val_details": {
+        "celltype": {
+          "accuracy": 94.93,
+          "weighted_f1": 94.93,
+          "macro_f1": 94.93,
+          "roc_auc": 94.93,
+          "ece_percent": 0.0,
+          "mean_confidence": 86.03
+        },
+        "health": {
+          "accuracy": 95.68,
+          "weighted_f1": 95.68,
+          "macro_f1": 95.68,
+          "roc_auc": 95.68,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.71
+        },
+        "disease": {
+          "accuracy": 95.53,
+          "weighted_f1": 95.53,
+          "macro_f1": 95.53,
+          "roc_auc": 95.53,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.97
+        },
+        "cancer_bin": {
+          "accuracy": 99.92,
+          "weighted_f1": 99.92,
+          "macro_f1": 99.92,
+          "roc_auc": 99.92,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.59
+        },
+        "cancer_var": {
+          "accuracy": 93.95,
+          "weighted_f1": 93.95,
+          "macro_f1": 93.95,
+          "roc_auc": 93.95,
+          "ece_percent": 0.0,
+          "mean_confidence": 90.26
+        },
+        "csc": {
+          "accuracy": 94.66,
+          "weighted_f1": 94.66,
+          "macro_f1": 94.66,
+          "roc_auc": 94.66,
+          "ece_percent": 0.0,
+          "mean_confidence": 86.55
+        },
+        "composite_mean_accuracy": 95.78
+      }
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.9819,
+      "val_composite_acc": 96.83,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.54,
+          "weighted_f1": 96.54,
+          "macro_f1": 96.54,
+          "roc_auc": 96.54,
+          "ece_percent": 0.0,
+          "mean_confidence": 91.45
+        },
+        "health": {
+          "accuracy": 96.89,
+          "weighted_f1": 96.89,
+          "macro_f1": 96.89,
+          "roc_auc": 96.89,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.34
+        },
+        "disease": {
+          "accuracy": 96.51,
+          "weighted_f1": 96.51,
+          "macro_f1": 96.51,
+          "roc_auc": 96.51,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.73
+        },
+        "cancer_bin": {
+          "accuracy": 99.95,
+          "weighted_f1": 99.95,
+          "macro_f1": 99.95,
+          "roc_auc": 99.95,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.21
+        },
+        "cancer_var": {
+          "accuracy": 94.38,
+          "weighted_f1": 94.38,
+          "macro_f1": 94.38,
+          "roc_auc": 94.38,
+          "ece_percent": 0.0,
+          "mean_confidence": 89.04
+        },
+        "csc": {
+          "accuracy": 96.69,
+          "weighted_f1": 96.69,
+          "macro_f1": 96.69,
+          "roc_auc": 96.69,
+          "ece_percent": 0.0,
+          "mean_confidence": 91.45
+        },
+        "composite_mean_accuracy": 96.83
+      }
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7701,
+      "val_composite_acc": 96.67,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.61,
+          "weighted_f1": 96.61,
+          "macro_f1": 96.61,
+          "roc_auc": 96.61,
+          "ece_percent": 0.0,
+          "mean_confidence": 90.6
+        },
+        "health": {
+          "accuracy": 96.31,
+          "weighted_f1": 96.31,
+          "macro_f1": 96.31,
+          "roc_auc": 96.31,
+          "ece_percent": 0.0,
+          "mean_confidence": 94.26
+        },
+        "disease": {
+          "accuracy": 95.84,
+          "weighted_f1": 95.84,
+          "macro_f1": 95.84,
+          "roc_auc": 95.84,
+          "ece_percent": 0.0,
+          "mean_confidence": 94.93
+        },
+        "cancer_bin": {
+          "accuracy": 99.87,
+          "weighted_f1": 99.87,
+          "macro_f1": 99.87,
+          "roc_auc": 99.87,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.67
+        },
+        "cancer_var": {
+          "accuracy": 94.53,
+          "weighted_f1": 94.53,
+          "macro_f1": 94.53,
+          "roc_auc": 94.53,
+          "ece_percent": 0.0,
+          "mean_confidence": 92.05
+        },
+        "csc": {
+          "accuracy": 96.89,
+          "weighted_f1": 96.89,
+          "macro_f1": 96.89,
+          "roc_auc": 96.89,
+          "ece_percent": 0.0,
+          "mean_confidence": 92.91
+        },
+        "composite_mean_accuracy": 96.67
+      }
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5981,
+      "val_composite_acc": 97.37,
+      "val_details": {
+        "celltype": {
+          "accuracy": 97.14,
+          "weighted_f1": 97.14,
+          "macro_f1": 97.14,
+          "roc_auc": 97.14,
+          "ece_percent": 0.0,
+          "mean_confidence": 91.74
+        },
+        "health": {
+          "accuracy": 96.86,
+          "weighted_f1": 96.86,
+          "macro_f1": 96.86,
+          "roc_auc": 96.86,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.16
+        },
+        "disease": {
+          "accuracy": 96.91,
+          "weighted_f1": 96.91,
+          "macro_f1": 96.91,
+          "roc_auc": 96.91,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.83
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.91
+        },
+        "cancer_var": {
+          "accuracy": 95.58,
+          "weighted_f1": 95.58,
+          "macro_f1": 95.58,
+          "roc_auc": 95.58,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.12
+        },
+        "csc": {
+          "accuracy": 97.74,
+          "weighted_f1": 97.74,
+          "macro_f1": 97.74,
+          "roc_auc": 97.74,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.6
+        },
+        "composite_mean_accuracy": 97.37
+      }
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.4686,
+      "val_composite_acc": 97.46,
+      "val_details": {
+        "celltype": {
+          "accuracy": 97.29,
+          "weighted_f1": 97.29,
+          "macro_f1": 97.29,
+          "roc_auc": 97.29,
+          "ece_percent": 0.0,
+          "mean_confidence": 94.73
+        },
+        "health": {
+          "accuracy": 97.06,
+          "weighted_f1": 97.06,
+          "macro_f1": 97.06,
+          "roc_auc": 97.06,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.53
+        },
+        "disease": {
+          "accuracy": 96.89,
+          "weighted_f1": 96.89,
+          "macro_f1": 96.89,
+          "roc_auc": 96.89,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.07
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.9
+        },
+        "cancer_var": {
+          "accuracy": 95.68,
+          "weighted_f1": 95.68,
+          "macro_f1": 95.68,
+          "roc_auc": 95.68,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.4
+        },
+        "csc": {
+          "accuracy": 97.87,
+          "weighted_f1": 97.87,
+          "macro_f1": 97.87,
+          "roc_auc": 97.87,
+          "ece_percent": 0.0,
+          "mean_confidence": 93.88
+        },
+        "composite_mean_accuracy": 97.46
+      }
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.3372,
+      "val_composite_acc": 97.64,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.81,
+          "weighted_f1": 96.81,
+          "macro_f1": 96.81,
+          "roc_auc": 96.81,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.41
+        },
+        "health": {
+          "accuracy": 97.19,
+          "weighted_f1": 97.19,
+          "macro_f1": 97.19,
+          "roc_auc": 97.19,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.23
+        },
+        "disease": {
+          "accuracy": 97.29,
+          "weighted_f1": 97.29,
+          "macro_f1": 97.29,
+          "roc_auc": 97.29,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.57
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.96
+        },
+        "cancer_var": {
+          "accuracy": 96.46,
+          "weighted_f1": 96.46,
+          "macro_f1": 96.46,
+          "roc_auc": 96.46,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.47
+        },
+        "csc": {
+          "accuracy": 98.09,
+          "weighted_f1": 98.09,
+          "macro_f1": 98.09,
+          "roc_auc": 98.09,
+          "ece_percent": 0.0,
+          "mean_confidence": 94.53
+        },
+        "composite_mean_accuracy": 97.64
+      }
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.2509,
+      "val_composite_acc": 97.49,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.59,
+          "weighted_f1": 96.59,
+          "macro_f1": 96.59,
+          "roc_auc": 96.59,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.81
+        },
+        "health": {
+          "accuracy": 97.14,
+          "weighted_f1": 97.14,
+          "macro_f1": 97.14,
+          "roc_auc": 97.14,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.37
+        },
+        "disease": {
+          "accuracy": 96.99,
+          "weighted_f1": 96.99,
+          "macro_f1": 96.99,
+          "roc_auc": 96.99,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.4
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.96
+        },
+        "cancer_var": {
+          "accuracy": 95.96,
+          "weighted_f1": 95.96,
+          "macro_f1": 95.96,
+          "roc_auc": 95.96,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.21
+        },
+        "csc": {
+          "accuracy": 98.24,
+          "weighted_f1": 98.24,
+          "macro_f1": 98.24,
+          "roc_auc": 98.24,
+          "ece_percent": 0.0,
+          "mean_confidence": 94.91
+        },
+        "composite_mean_accuracy": 97.49
+      }
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.1817,
+      "val_composite_acc": 97.72,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.91,
+          "weighted_f1": 96.91,
+          "macro_f1": 96.91,
+          "roc_auc": 96.91,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.32
+        },
+        "health": {
+          "accuracy": 97.37,
+          "weighted_f1": 97.37,
+          "macro_f1": 97.37,
+          "roc_auc": 97.37,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.23
+        },
+        "disease": {
+          "accuracy": 97.29,
+          "weighted_f1": 97.29,
+          "macro_f1": 97.29,
+          "roc_auc": 97.29,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.08
+        },
+        "cancer_bin": {
+          "accuracy": 99.97,
+          "weighted_f1": 99.97,
+          "macro_f1": 99.97,
+          "roc_auc": 99.97,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.96
+        },
+        "cancer_var": {
+          "accuracy": 96.59,
+          "weighted_f1": 96.59,
+          "macro_f1": 96.59,
+          "roc_auc": 96.59,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.9
+        },
+        "csc": {
+          "accuracy": 98.19,
+          "weighted_f1": 98.19,
+          "macro_f1": 98.19,
+          "roc_auc": 98.19,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.44
+        },
+        "composite_mean_accuracy": 97.72
+      }
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.1243,
+      "val_composite_acc": 97.66,
+      "val_details": {
+        "celltype": {
+          "accuracy": 97.14,
+          "weighted_f1": 97.14,
+          "macro_f1": 97.14,
+          "roc_auc": 97.14,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.05
+        },
+        "health": {
+          "accuracy": 96.99,
+          "weighted_f1": 96.99,
+          "macro_f1": 96.99,
+          "roc_auc": 96.99,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.14
+        },
+        "disease": {
+          "accuracy": 97.14,
+          "weighted_f1": 97.14,
+          "macro_f1": 97.14,
+          "roc_auc": 97.14,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.34
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.98
+        },
+        "cancer_var": {
+          "accuracy": 96.46,
+          "weighted_f1": 96.46,
+          "macro_f1": 96.46,
+          "roc_auc": 96.46,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.48
+        },
+        "csc": {
+          "accuracy": 98.24,
+          "weighted_f1": 98.24,
+          "macro_f1": 98.24,
+          "roc_auc": 98.24,
+          "ece_percent": 0.0,
+          "mean_confidence": 95.57
+        },
+        "composite_mean_accuracy": 97.66
+      }
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.0963,
+      "val_composite_acc": 97.77,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.89,
+          "weighted_f1": 96.89,
+          "macro_f1": 96.89,
+          "roc_auc": 96.89,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.55
+        },
+        "health": {
+          "accuracy": 97.27,
+          "weighted_f1": 97.27,
+          "macro_f1": 97.27,
+          "roc_auc": 97.27,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.11
+        },
+        "disease": {
+          "accuracy": 97.32,
+          "weighted_f1": 97.32,
+          "macro_f1": 97.32,
+          "roc_auc": 97.32,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.33
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.98
+        },
+        "cancer_var": {
+          "accuracy": 96.54,
+          "weighted_f1": 96.54,
+          "macro_f1": 96.54,
+          "roc_auc": 96.54,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.71
+        },
+        "csc": {
+          "accuracy": 98.57,
+          "weighted_f1": 98.57,
+          "macro_f1": 98.57,
+          "roc_auc": 98.57,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.05
+        },
+        "composite_mean_accuracy": 97.77
+      }
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.0741,
+      "val_composite_acc": 97.84,
+      "val_details": {
+        "celltype": {
+          "accuracy": 97.01,
+          "weighted_f1": 97.01,
+          "macro_f1": 97.01,
+          "roc_auc": 97.01,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.87
+        },
+        "health": {
+          "accuracy": 97.44,
+          "weighted_f1": 97.44,
+          "macro_f1": 97.44,
+          "roc_auc": 97.44,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.52
+        },
+        "disease": {
+          "accuracy": 97.52,
+          "weighted_f1": 97.52,
+          "macro_f1": 97.52,
+          "roc_auc": 97.52,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.66
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.98
+        },
+        "cancer_var": {
+          "accuracy": 96.34,
+          "weighted_f1": 96.34,
+          "macro_f1": 96.34,
+          "roc_auc": 96.34,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.9
+        },
+        "csc": {
+          "accuracy": 98.72,
+          "weighted_f1": 98.72,
+          "macro_f1": 98.72,
+          "roc_auc": 98.72,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.39
+        },
+        "composite_mean_accuracy": 97.84
+      }
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.0591,
+      "val_composite_acc": 97.78,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.94,
+          "weighted_f1": 96.94,
+          "macro_f1": 96.94,
+          "roc_auc": 96.94,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.97
+        },
+        "health": {
+          "accuracy": 97.27,
+          "weighted_f1": 97.27,
+          "macro_f1": 97.27,
+          "roc_auc": 97.27,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.96
+        },
+        "disease": {
+          "accuracy": 97.22,
+          "weighted_f1": 97.22,
+          "macro_f1": 97.22,
+          "roc_auc": 97.22,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.04
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.98
+        },
+        "cancer_var": {
+          "accuracy": 96.61,
+          "weighted_f1": 96.61,
+          "macro_f1": 96.61,
+          "roc_auc": 96.61,
+          "ece_percent": 0.0,
+          "mean_confidence": 97.95
+        },
+        "csc": {
+          "accuracy": 98.67,
+          "weighted_f1": 98.67,
+          "macro_f1": 98.67,
+          "roc_auc": 98.67,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.4
+        },
+        "composite_mean_accuracy": 97.78
+      }
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.051,
+      "val_composite_acc": 97.81,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.89,
+          "weighted_f1": 96.89,
+          "macro_f1": 96.89,
+          "roc_auc": 96.89,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.08
+        },
+        "health": {
+          "accuracy": 97.37,
+          "weighted_f1": 97.37,
+          "macro_f1": 97.37,
+          "roc_auc": 97.37,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.02
+        },
+        "disease": {
+          "accuracy": 97.37,
+          "weighted_f1": 97.37,
+          "macro_f1": 97.37,
+          "roc_auc": 97.37,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.07
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.98
+        },
+        "cancer_var": {
+          "accuracy": 96.54,
+          "weighted_f1": 96.54,
+          "macro_f1": 96.54,
+          "roc_auc": 96.54,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.0
+        },
+        "csc": {
+          "accuracy": 98.72,
+          "weighted_f1": 98.72,
+          "macro_f1": 98.72,
+          "roc_auc": 98.72,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.32
+        },
+        "composite_mean_accuracy": 97.81
+      }
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.0481,
+      "val_composite_acc": 97.81,
+      "val_details": {
+        "celltype": {
+          "accuracy": 96.86,
+          "weighted_f1": 96.86,
+          "macro_f1": 96.86,
+          "roc_auc": 96.86,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.08
+        },
+        "health": {
+          "accuracy": 97.32,
+          "weighted_f1": 97.32,
+          "macro_f1": 97.32,
+          "roc_auc": 97.32,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.02
+        },
+        "disease": {
+          "accuracy": 97.32,
+          "weighted_f1": 97.32,
+          "macro_f1": 97.32,
+          "roc_auc": 97.32,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.08
+        },
+        "cancer_bin": {
+          "accuracy": 100.0,
+          "weighted_f1": 100.0,
+          "macro_f1": 100.0,
+          "roc_auc": 100.0,
+          "ece_percent": 0.0,
+          "mean_confidence": 99.98
+        },
+        "cancer_var": {
+          "accuracy": 96.56,
+          "weighted_f1": 96.56,
+          "macro_f1": 96.56,
+          "roc_auc": 96.56,
+          "ece_percent": 0.0,
+          "mean_confidence": 98.01
+        },
+        "csc": {
+          "accuracy": 98.82,
+          "weighted_f1": 98.82,
+          "macro_f1": 98.82,
+          "roc_auc": 98.82,
+          "ece_percent": 0.0,
+          "mean_confidence": 96.38
+        },
+        "composite_mean_accuracy": 97.81
+      }
+    }
+  ],
+  "case_names": [
+    "SingleCell_LUAD_CancerStemCell_CSC+",
+    "BulkRNAseq_LUAD_Tumor_Biopsy",
+    "SingleCell_COVID19_Viral_Infection",
+    "BulkRNAseq_MultipleSclerosis_Brain",
+    "SingleCell_Healthy_Control",
+    "BulkRNAseq_Pancreatic_PAAD_Cancer",
+    "SingleCell_CML_Leukemia_CSC+",
+    "BulkRNAseq_Kidney_RCC_Biopsy"
+  ]
+}

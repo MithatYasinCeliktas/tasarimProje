@@ -1,0 +1,40 @@
+# ============================================================================
+# 1. GİZLİ ANAHTARLAR VE ORTAM DOSYALARI (ASLA GITHUB'A GİTMEZ!)
+# ============================================================================
+.env
+*.env
+*.env.*
+!.env.example
+
+# Kaggle yerel kimlik ve geçici tünel/staging dosyaları
+kaggle.json
+access_token
+kaggle_bridge/active_tunnel.json
+kaggle_bridge/_staging_kernel/
+
+# ============================================================================
+# 2. BÜYÜK HAM VERİ SETLERİ VE ARŞİVLER (GitHub 100MB limitini aşan dosyalar)
+# ============================================================================
+firststep/
+data/
+test_out/
+**/DS_Store
+*.h5ad
+*.h5mu
+*.zip
+*.tar
+*.tar.gz
+*.whl
+
+# ============================================================================
+# 3. PYTHON ÖNBELLEK VE SİSTEM DOSYALARI
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+.DS_Store
+Thumbs.db

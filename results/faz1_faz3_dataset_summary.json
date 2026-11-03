@@ -1,0 +1,46 @@
+{
+  "total_samples": 38263,
+  "single_cell_samples": 33943,
+  "pseudobulk_samples": 4320,
+  "splits": {
+    "train": 25791,
+    "val": 3986,
+    "test": 8486
+  },
+  "cell_type_counts": {
+    "Malignant_Cancer_Cell": 4093,
+    "Epithelial_Normal": 1974,
+    "T_Lymphocyte": 3406,
+    "B_Lymphocyte_Plasma": 2513,
+    "NK_NKT_Cell": 1105,
+    "Macrophage_Monocyte": 10913,
+    "Dendritic_Cell": 3673,
+    "Mast_Erythroid_HSPC": 1049,
+    "Fibroblast_Stromal": 2342,
+    "Endothelial_Vascular": 1295,
+    "Neuron_Excitatory_Inhibitory": 2012,
+    "Astrocyte_Glial": 1434,
+    "Oligodendrocyte_OPC": 1273,
+    "Pancreas_Islet_Exocrine": 1181
+  },
+  "disease_category_counts": {
+    "Healthy_Control": 8988,
+    "Viral_Infection_COVID19": 2316,
+    "Autoimmune_Neuro_MS": 3775,
+    "Cancer_Malignancy": 23184
+  },
+  "cancer_variant_counts": {
+    "Non_Cancer": 15079,
+    "LUAD_Lung_Adenocarcinoma": 11906,
+    "NSCLC_Epithelial_A549": 1181,
+    "CML_Myeloid_Leukemia_K562": 1181,
+    "KIDNEY_Renal_Carcinoma": 2062,
+    "UCEC_Endometrial_Carcinoma": 1430,
+    "ESCA_Esophageal_Carcinoma": 1289,
+    "MYE_Multiple_Myeloma": 1407,
+    "THCA_Thyroid_Carcinoma": 1189,
+    "OV_Ovarian_Carcinoma": 920,
+    "PAAD_Pancreatic_Carcinoma": 619
+  },
+  "csc_positive_count": 5799
+}
