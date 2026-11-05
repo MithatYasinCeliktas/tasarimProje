@@ -11,15 +11,17 @@ import pptx
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.text import PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 
 def create_deck(output_path: str):
     prs = Presentation()
-    # 16:9 Geniş Ekran Standardı
-    prs.slide_width = Inches(13.333)
+    # 16:9 Geniş Ekran Standardı (12192000 x 6858000 EMU)
+    prs.slide_width = Inches(13.333333)
     prs.slide_height = Inches(7.5)
     blank_layout = prs.slide_layouts[6]
+
+    FONT_FAMILY = "Segoe UI"
 
     # Renk Paleti (Akademik / Profesyonel Medikal Bilişim Teması)
     C_NAVY_DARK = RGBColor(15, 23, 42)      # #0F172A (Koyu Başlık / Kapak Arka Planı)
@@ -44,6 +46,16 @@ def create_deck(output_path: str):
         bg.line.fill.background()
         return bg
 
+    def add_run_text(paragraph, text, size_pt, color=C_TEXT_DARK, bold=False, italic=False):
+        run = paragraph.add_run()
+        run.text = text
+        run.font.name = FONT_FAMILY
+        run.font.size = Pt(size_pt)
+        run.font.bold = bold
+        run.font.italic = italic
+        run.font.color.rgb = color
+        return run
+
     def add_header(slide, title, category="PROJE TASARIM DERSI ARA RAPORU SUNUMU", slide_num=None):
         set_slide_bg(slide, C_GRAY_BG)
 
@@ -60,16 +72,10 @@ def create_deck(output_path: str):
         tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
 
         p0 = tf.paragraphs[0]
-        p0.text = category.upper()
-        p0.font.size = Pt(9.5)
-        p0.font.bold = True
-        p0.font.color.rgb = C_BLUE
+        add_run_text(p0, category.upper(), 9.5, color=C_BLUE, bold=True)
 
         p1 = tf.add_paragraph()
-        p1.text = title
-        p1.font.size = Pt(19)
-        p1.font.bold = True
-        p1.font.color.rgb = C_NAVY_DARK
+        add_run_text(p1, title, 19, color=C_NAVY_DARK, bold=True)
 
         # Sayfa Numarası & Footer
         if slide_num:
@@ -77,9 +83,8 @@ def create_deck(output_path: str):
             ftf = ftr.text_frame
             ftf.margin_left = ftf.margin_top = ftf.margin_right = ftf.margin_bottom = 0
             fp = ftf.paragraphs[0]
-            fp.text = f"Mithat Yasin Çeliktaş | scMamba2 + BiMamba Hiyerarşik Klinik Teşhis & XAI Sistemi                                                                            Slayt {slide_num} / 15"
-            fp.font.size = Pt(8.5)
-            fp.font.color.rgb = C_TEXT_MUTED
+            add_run_text(fp, f"Mithat Yasin Celiktas | scMamba2 + BiMamba Hiyerarsik Klinik Teshis ve XAI Sistemi", 8.5, color=C_TEXT_MUTED)
+            add_run_text(fp, f"                                                                               Slayt {slide_num} / 15", 8.5, color=C_TEXT_MUTED, bold=True)
 
     def add_card(slide, left, top, width, height, title=None, subtitle=None, bg_color=C_CARD_BG, border_color=C_BORDER):
         card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
@@ -94,16 +99,11 @@ def create_deck(output_path: str):
             tf.word_wrap = True
             tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
             p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(13)
-            p.font.bold = True
-            p.font.color.rgb = C_NAVY_DARK
+            add_run_text(p, title, 13, color=C_NAVY_DARK, bold=True)
 
             if subtitle:
                 p2 = tf.add_paragraph()
-                p2.text = subtitle
-                p2.font.size = Pt(9.5)
-                p2.font.color.rgb = C_TEXT_MUTED
+                add_run_text(p2, subtitle, 9.5, color=C_TEXT_MUTED)
         return card
 
     def add_placeholder(slide, left, top, width, height, placeholder_title, subtitle="Isı Haritası / Grafik Görseli"):
@@ -113,31 +113,23 @@ def create_deck(output_path: str):
         box.line.color.rgb = C_PH_BORDER
         box.line.width = Pt(1.5)
 
-        tb = slide.shapes.add_textbox(left + Inches(0.2), top + height/2 - Inches(0.7), width - Inches(0.4), Inches(1.4))
+        tb_top = top + (height // 2) - Inches(0.7)
+        tb = slide.shapes.add_textbox(left + Inches(0.2), tb_top, width - Inches(0.4), Inches(1.4))
         tf = tb.text_frame
         tf.word_wrap = True
         tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
 
         p1 = tf.paragraphs[0]
-        p1.text = "🖼️ [ GÖRSEL / ISI HARİTASI ALANI ]"
         p1.alignment = PP_ALIGN.CENTER
-        p1.font.size = Pt(12)
-        p1.font.bold = True
-        p1.font.color.rgb = C_BLUE
+        add_run_text(p1, "[ GORSEL / ISI HARITASI ALANI ]", 12, color=C_BLUE, bold=True)
 
         p2 = tf.add_paragraph()
-        p2.text = placeholder_title
         p2.alignment = PP_ALIGN.CENTER
-        p2.font.size = Pt(11)
-        p2.font.bold = True
-        p2.font.color.rgb = C_NAVY_DARK
+        add_run_text(p2, placeholder_title, 11, color=C_NAVY_DARK, bold=True)
 
         p3 = tf.add_paragraph()
-        p3.text = f"({subtitle})"
         p3.alignment = PP_ALIGN.CENTER
-        p3.font.size = Pt(9)
-        p3.font.italic = True
-        p3.font.color.rgb = C_TEXT_MUTED
+        add_run_text(p3, f"({subtitle})", 9, color=C_TEXT_MUTED, italic=True)
         return box
 
     def add_stat_box(slide, left, top, width, height, stat_value, stat_label, accent_color=C_BLUE):
@@ -159,18 +151,12 @@ def create_deck(output_path: str):
         tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
 
         p = tf.paragraphs[0]
-        p.text = stat_value
         p.alignment = PP_ALIGN.CENTER
-        p.font.size = Pt(22)
-        p.font.bold = True
-        p.font.color.rgb = accent_color
+        add_run_text(p, stat_value, 22, color=accent_color, bold=True)
 
         p2 = tf.add_paragraph()
-        p2.text = stat_label
         p2.alignment = PP_ALIGN.CENTER
-        p2.font.size = Pt(9.5)
-        p2.font.bold = True
-        p2.font.color.rgb = C_NAVY_DARK
+        add_run_text(p2, stat_label, 9.5, color=C_NAVY_DARK, bold=True)
 
     def add_bullet_points(slide, left, top, width, height, points):
         tb = slide.shapes.add_textbox(left, top, width, height)
@@ -180,11 +166,8 @@ def create_deck(output_path: str):
 
         for i, pt_text in enumerate(points):
             p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-            p.text = pt_text
-            p.font.size = Pt(10.5)
-            p.font.color.rgb = C_NAVY_DARK
+            add_run_text(p, pt_text, 10.5, color=C_NAVY_DARK)
             p.space_after = Pt(8)
-            p.level = 0
 
     # =========================================================================
     # SLIDE 1: BAŞLIK / KAPAK SLAYTI (Dark Premium Theme)
@@ -192,7 +175,6 @@ def create_deck(output_path: str):
     s1 = prs.slides.add_slide(blank_layout)
     set_slide_bg(s1, C_NAVY_DARK)
 
-    # Arka plan dekoratif geometrik çizgi
     deco = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, Inches(7.35), prs.slide_width, Inches(0.15))
     deco.fill.solid()
     deco.fill.fore_color.rgb = C_BLUE
@@ -202,25 +184,17 @@ def create_deck(output_path: str):
     tb = s1.shapes.add_textbox(Inches(1.0), Inches(1.1), Inches(11.3), Inches(0.5))
     tf = tb.text_frame
     p = tf.paragraphs[0]
-    p.text = "BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ  |  TASARIM VE BİTİRME PROJESİ — ARA RAPOR SUNUMU"
-    p.font.size = Pt(10)
-    p.font.bold = True
-    p.font.color.rgb = C_BLUE
+    add_run_text(p, "BILGISAYAR MUHENDISLIGI BOLUMU  |  TASARIM VE BITIRME PROJESI - ARA RAPOR SUNUMU", 10, color=C_BLUE, bold=True)
 
     # Ana Başlık
     tb_title = s1.shapes.add_textbox(Inches(1.0), Inches(1.65), Inches(11.3), Inches(2.2))
     tft = tb_title.text_frame
     tft.word_wrap = True
     pt = tft.paragraphs[0]
-    pt.text = "scMamba2 + BiMamba ile Hiyerarşik Klinik Teşhis ve Açıklanabilir Yapay Zeka (XAI) Karar Destek Sistemi"
-    pt.font.size = Pt(28)
-    pt.font.bold = True
-    pt.font.color.rgb = C_TEXT_LIGHT
+    add_run_text(pt, "scMamba2 + BiMamba ile Hiyerarsik Klinik Teshis ve Aciklanabilir Yapay Zeka (XAI) Karar Destek Sistemi", 28, color=C_TEXT_LIGHT, bold=True)
 
     pt_sub = tft.add_paragraph()
-    pt_sub.text = "Tek Hücreli (scRNA-seq) ve Toplu Doku (Bulk RNA-seq) Seviyesinde Kanser ve Kanser Kök Hücresi (CSC) Tespiti"
-    pt_sub.font.size = Pt(14)
-    pt_sub.font.color.rgb = RGBColor(148, 163, 184)
+    add_run_text(pt_sub, "Tek Hucreli (scRNA-seq) ve Toplu Doku (Bulk RNA-seq) Seviyesinde Kanser ve Kanser Kok Hucresi (CSC) Tespiti", 14, color=RGBColor(148, 163, 184))
     pt_sub.space_before = Pt(8)
 
     # Bilgi Kutusu Kartı
@@ -234,27 +208,18 @@ def create_deck(output_path: str):
     tfm.word_wrap = True
 
     p = tfm.paragraphs[0]
-    p.text = "👤 Proje Yürütücüsü: Mithat Yasin Çeliktaş"
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = C_TEXT_LIGHT
+    add_run_text(p, "[Proje Yurutucusu]: Mithat Yasin Celiktas", 13, color=C_TEXT_LIGHT, bold=True)
 
     p2 = tfm.add_paragraph()
-    p2.text = "🎯 Danışman / Ders: Tasarım ve Bitirme Projesi Ara Rapor Değerlendirme Jürisi"
-    p2.font.size = Pt(11.5)
-    p2.font.color.rgb = RGBColor(203, 213, 225)
+    add_run_text(p2, "[Danisman / Ders]: Tasarim ve Bitirme Projesi Ara Rapor Degerlendirme Jurisi", 11.5, color=RGBColor(203, 213, 225))
     p2.space_before = Pt(6)
 
     p3 = tfm.add_paragraph()
-    p3.text = "🔗 Açık Kaynak GitHub Deposu: https://github.com/MithatYasinCeliktas/tasarimProje"
-    p3.font.size = Pt(10.5)
-    p3.font.color.rgb = C_BLUE
+    add_run_text(p3, "[GitHub Deposu]: https://github.com/MithatYasinCeliktas/tasarimProje", 10.5, color=C_BLUE)
     p3.space_before = Pt(6)
 
     p4 = tfm.add_paragraph()
-    p4.text = "📊 Canlı Ar-Ge Test Tezgahı: Streamlit Web Platformu (Yerel Port: 8501) | Kaggle 2x Tesla T4 GPU Hibrit Köprüsü"
-    p4.font.size = Pt(10.5)
-    p4.font.color.rgb = C_TEAL
+    add_run_text(p4, "[Ar-Ge Test Tezgahi]: Streamlit Web Platformu (Port: 8501) | Kaggle 2x Tesla T4 GPU Hibrit Koprusu", 10.5, color=C_TEAL)
     p4.space_before = Pt(4)
 
 
@@ -262,76 +227,69 @@ def create_deck(output_path: str):
     # SLIDE 2: KLİNİK MOTİVASYON VE PROBLEM TANIMI
     # =========================================================================
     s2 = prs.slides.add_slide(blank_layout)
-    add_header(s2, "Klinik Problem Tanımı ve Biyolojik Motivasyon", slide_num=2)
+    add_header(s2, "Klinik Problem Tanimi ve Biyolojik Motivasyon", slide_num=2)
 
-    # Sol Kart: Biyolojik Zorluk
     add_card(s2, Inches(0.8), Inches(1.45), Inches(5.6), Inches(4.2),
-             title="🧬 Biyolojik Problem: Tümör Heterojenitesi & CSC",
-             subtitle="Geleneksel Biyopsilerin ve Doku Ortalamasının Yetersizliği")
+             title="Biyolojik Problem: Tumor Heterojenitesi ve CSC",
+             subtitle="Geleneksel Biyopsilerin ve Doku Ortalamasinin Yetersizligi")
     add_bullet_points(s2, Inches(1.05), Inches(2.25), Inches(5.1), Inches(3.2), [
-        "• Bulk RNA-seq Maskelemesi: Klasik doku biyopsileri milyonlarca hücrenin ortalamasını alır; nadir ancak en ölümcül alt popülasyonları gizler.",
-        "• Kanser Kök Hücreleri (CSC): Kemoterapi ve radyoterapiye dirençli, nüksetme ve metastazı başlatan asıl kök hücre grubudur.",
-        "• Klinik İhtiyaç: Tek tek hücre düzeyinde ve doku karışımlarında kök hücre sinyallerini (CD44, ALDH1A1, PROM1) ayırt edebilecek hassas bir tanı motoru şarttır."
+        "- Bulk RNA-seq Maskelemesi: Klasik doku biyopsileri milyonlarca hucrenin ortalamasini alir; nadir ancak en olumcul alt populasyonlari gizler.",
+        "- Kanser Kok Hucreleri (CSC): Kemoterapi ve radyoterapiye direncli, nuksetme ve metastazi baslatan asil kok hucre grubudur.",
+        "- Klinik Ihtiyac: Tek tek hucre duzeyinde ve doku karisimlarinda kok hucre sinyallerini (CD44, ALDH1A1, PROM1) ayirt edebilecek hassas bir tani motoru sarttir."
     ])
 
-    # Sağ Kart: Hesaplamalı Bilişim Zorluğu
     add_card(s2, Inches(6.8), Inches(1.45), Inches(5.7), Inches(4.2),
-             title="💻 Bilişimsel Zorluk: 60,000+ Gen ve Dropout Gürültüsü",
-             subtitle="Neden Transformer Mimarileri Bu Ölçekte Tıkanıyor?")
+             title="Bilisimsel Zorluk: 60,000+ Gen ve Dropout Gurultusu",
+             subtitle="Neden Transformer Mimarileri Bu Olcekte Tíkaniyor?")
     add_bullet_points(s2, Inches(7.05), Inches(2.25), Inches(5.2), Inches(3.2), [
-        "• Aşırı Yüksek Boyutluluk: İnsan genomunda 60,700 gen bulunur. Hücre başına seyreklik (sparsity/dropout) %85-90 düzeyindedir.",
-        "• Transformer Darboğazı O(N²): Self-Attention mekanizması 512 genin ötesinde bellek tüketimini katlar; GPU'larda OOM (Out-of-Memory) oluşturur.",
-        "• Çözüm: Lineer O(N) karmaşıklıkla çalışan State-Space Model (SSM) Mamba mimarisi ve çift yönlü BiMamba etkileşim katmanı."
+        "- Asiri Yuksek Boyutluluk: Insan genomunda 60,700 gen bulunur. Hucre basina seyreklik (sparsity/dropout) %85-90 duzeyindedir.",
+        "- Transformer Darbogazi O(N2): Self-Attention mekanizmasi 512 genin otesinde bellek tuketimini katlar; GPU'larda OOM olusturur.",
+        "- Cozum: Lineer O(N) karmasiklikla calisan State-Space Model (SSM) Mamba mimarisi ve cift yonlu BiMamba etkilesim katmani."
     ])
 
-    # Alt Özet Bandı
     add_card(s2, Inches(0.8), Inches(5.85), Inches(11.7), Inches(1.05), bg_color=C_NAVY_DARK, border_color=C_BLUE)
     tb = s2.shapes.add_textbox(Inches(1.0), Inches(5.95), Inches(11.3), Inches(0.85))
     tf = tb.text_frame
     tf.word_wrap = True
     p = tf.paragraphs[0]
-    p.text = "🎯 Temel Hedef: scMamba2 + BiMamba mimarisi ile hem tek hücrede hem de toplu dokuda 6 kademeli hiyerarşik klinik teşhis koymak ve kararları gen seviyesinde açıklanabilir kılmaktır."
-    p.font.size = Pt(11.5)
-    p.font.bold = True
-    p.font.color.rgb = C_TEXT_LIGHT
+    add_run_text(p, "Temel Hedef: scMamba2 + BiMamba mimarisi ile hem tek hucrede hem de toplu dokuda 6 kademeli hiyerarsik klinik teshis koymak ve kararlari gen seviyesinde aciklanabilir kilmaktir.", 11.5, color=C_TEXT_LIGHT, bold=True)
 
 
     # =========================================================================
     # SLIDE 3: PROJENİN AMACI VE ÖZGÜN DEĞERİ
     # =========================================================================
     s3 = prs.slides.add_slide(blank_layout)
-    add_header(s3, "Projenin Amacı, Kapsamı ve Özgün Değeri (Novelty)", slide_num=3)
+    add_header(s3, "Projenin Amaci, Kapsami ve Ozgun Degeri (Novelty)", slide_num=3)
 
-    # 3 Sütunlu İnovasyon Kartları
     add_card(s3, Inches(0.8), Inches(1.5), Inches(3.7), Inches(5.2),
-             title="1. scMamba2 + BiMamba Hibrit Mimarisi",
-             subtitle="Foundation Model + Çift Yönlü SSM")
+             title="1. scMamba2 + BiMamba Hibriti",
+             subtitle="Foundation Model + Cift Yonlu SSM")
     add_bullet_points(s3, Inches(1.0), Inches(2.35), Inches(3.3), Inches(4.1), [
-        "• 60,700 Gen Sözlüğü: scMamba2 ön eğitimli temel omurga ile hücrenin global temsili çıkarılır.",
-        "• Çift Yönlü BiMamba: Genomik dizilimdeki ileri (5'→3') ve geri (3'→5') gen düzenleme etkileşimleri modellenir.",
-        "• Lineer O(N) Verimlilik: Transformer'lara kıyasla 4x daha hızlı çıkarım ve düşük bellek tüketimi."
+        "- 60,700 Gen Sozlugu: scMamba2 on egitimli temel omurga ile hucrenin global temsili cikarilir.",
+        "- Cift Yonlu BiMamba: Genomik dizilimdeki ileri ve geri gen duzenleme etkilesimleri modellenir.",
+        "- Lineer O(N) Verimlilik: Transformer'lara kiyasla 4x daha hizli cikarim ve dusuk bellek tuketimi."
     ])
 
     add_card(s3, Inches(4.8), Inches(1.5), Inches(3.7), Inches(5.2),
-             title="2. 6 Kademeli Hiyerarşik Teşhis",
-             subtitle="Tek Aşamalı Sınıflandırıcılar Yerine Ağaç Yapısı")
+             title="2. 6 Kademeli Hiyerarsik Teshis",
+             subtitle="Tek Asamali Siniflandiricilar Yerine Agac Yapisi")
     add_bullet_points(s3, Inches(5.0), Inches(2.35), Inches(3.3), Inches(4.1), [
-        "• Düz multiclass yerine onkolojik karar ağacı simüle edilir.",
-        "• Hücre Tipi (14 Sınıf)",
-        "• Sağlık Durumu (Normal vs Hasta)",
-        "• Hastalık Arketipi (COVID, MS, Kanser)",
-        "• Malignite / Kanser Tespiti",
-        "• 11 Kanser Varyantı (Organ Kökeni)",
-        "• Kanser Kök Hücresi (CSC) Varlığı"
+        "- Duz multiclass yerine onkolojik karar agaci simule edilir.",
+        "- 1. Hucre Tipi (14 Sinif)",
+        "- 4a. Saglik Durumu (Normal vs Hasta)",
+        "- 4b. Hastalik Arketipi (COVID, MS, Kanser)",
+        "- 4c. Malignite / Kanser Tespiti",
+        "- 4d. 11 Kanser Varyanti (Organ Kokeni)",
+        "- 4d-Ek. Kanser Kok Hucresi (CSC) Varligi"
     ])
 
     add_card(s3, Inches(8.8), Inches(1.5), Inches(3.7), Inches(5.2),
-             title="3. Açıklanabilir XAI & Isı Haritaları",
-             subtitle="Kara Kutu Yapay Zekayı Kırma")
+             title="3. Aciklanabilir XAI ve Isı Haritalari",
+             subtitle="Kara Kutu Yapay Zekayi Kirma")
     add_bullet_points(s3, Inches(9.0), Inches(2.35), Inches(3.3), Inches(4.1), [
-        "• Input × Gradient Atıfı: Kararı belirleyen Top-18 kilit gen hekime gösterilir.",
-        "• 16 Biyolojik Yolak Skoru: Kök hücre, EMT metastaz ve hipoksi aktivasyonu ölçülür.",
-        "• 4-Panelli Master Heatmap: Güven, gen, varyant ve yolak seviyesinde tek parça tanı raporu."
+        "- Input x Gradient Atifi: Karari belirleyen Top-18 kilit gen hekime gosterilir.",
+        "- 16 Biyolojik Yolak Skoru: Kok hucre, EMT metastaz ve hipoksi aktivasyonu olculur.",
+        "- 4-Panelli Master Heatmap: Guven, gen, varyant ve yolak seviyesinde tek parca tani raporu."
     ])
 
 
@@ -339,53 +297,50 @@ def create_deck(output_path: str):
     # SLIDE 4: SİSTEM MİMARİSİ VE AKIŞ ŞEMASI
     # =========================================================================
     s4 = prs.slides.add_slide(blank_layout)
-    add_header(s4, "Sistem Mimarisi ve Uçtan Uca Veri Akışı", slide_num=4)
+    add_header(s4, "Sistem Mimarisi ve Uctan Uca Veri Akisi", slide_num=4)
 
-    # Sol Kolon: Mimari Bileşenleri
     add_card(s4, Inches(0.8), Inches(1.45), Inches(5.3), Inches(5.4),
-             title="⚙️ Mimari Bileşenleri ve Tensör Boyutları",
+             title="Mimari Bilesenleri ve Tensor Boyutlari",
              subtitle="scMamba2 + BiMamba Entegrasyonu")
     add_bullet_points(s4, Inches(1.05), Inches(2.25), Inches(4.8), Inches(4.4), [
-        "1. Girdi Katmanı (AnnData / Tensör):",
-        "   • tokens_genes (B, 1024) & tokens_vals (B, 1024)",
-        "   • panel_expr (B, 512): Kromozom sıralı Master Genler",
-        "   • bio_sigs_norm (B, 16): Biyolojik Yolak Z-skorları",
+        "1. Girdi Katmani (AnnData / Tensor):",
+        "   - tokens_genes (B, 1024) & tokens_vals (B, 1024)",
+        "   - panel_expr (B, 512): Kromozom sirali Master Genler",
+        "   - bio_sigs_norm (B, 16): Biyolojik Yolak Z-skorlari",
         "2. scMamba2 Backbone (Pretrained 512-d Temsil):",
-        "   • ContinuousValueEncoder + State-Space Blokları",
-        "3. Gated BiMamba Karar Motoru (2 Katmanlı):",
-        "   • İleri SSM + Geri SSM + Kapı Füzyon Ağı",
-        "4. Çok Görevli Kayıp Fonksiyonu (Multi-Task Loss):",
-        "   • Focal Loss (Dengesiz Kanser Varyantları)",
-        "   • CSC Weighted BCE & Cosine Prototip Kaybı",
-        "   • ECE Kalibrasyon Cezalandırması"
+        "   - ContinuousValueEncoder + State-Space Bloklari",
+        "3. Gated BiMamba Karar Motoru (2 Katmanli):",
+        "   - Ileri SSM + Geri SSM + Kapi Fuzyon Agi",
+        "4. Cok Gorevli Kayip Fonksiyonu (Multi-Task Loss):",
+        "   - Focal Loss (Dengesiz Kanser Varyantlari)",
+        "   - CSC Weighted BCE & Cosine Prototip Kaybi",
+        "   - ECE Kalibrasyon Cezalandirmasi"
     ])
 
-    # Sağ Kolon: Mimari Şema İçin Ayrılmış Alan
     add_placeholder(s4, Inches(6.4), Inches(1.45), Inches(6.1), Inches(5.4),
-                    placeholder_title="SİSTEM VE MODEL MİMARİSİ AKIŞ ŞEMASI",
-                    subtitle="scMamba2 Backbone -> Gated BiMamba Head -> 6 Teşhis Başlığı")
+                    placeholder_title="SISTEM VE MODEL MIMARISI AKIS SEMASI",
+                    subtitle="scMamba2 Backbone -> Gated BiMamba Head -> 6 Teshis Basligi")
 
 
     # =========================================================================
     # SLIDE 5: 6 KADEMELİ HİYERARŞİK KLİNİK TEŞHİS AĞACI
     # =========================================================================
     s5 = prs.slides.add_slide(blank_layout)
-    add_header(s5, "6 Kademeli Hiyerarşik Klinik Karar Ağacı", slide_num=5)
+    add_header(s5, "6 Kademeli Hiyerarsik Klinik Karar Agaci", slide_num=5)
 
-    # 6 Seviyeyi İki Sütun Halinde Kartlarla Göster
     levels = [
-        ("Seviye 1: Hücre Tipi (Cell Type)", "14 Temel Biyolojik Sınıf",
-         "Malign Kanser Hücresi, T Lenfosit, B Lenfosit, Makrofaj/Monosit, Epitelyal Hücre, Nöron, Astrosit, Oligodendrosit, Fibroblast, Endotel vb.", C_BLUE),
-        ("Seviye 4a: Genel Sağlık Durumu", "2 Sınıf: Sağlıklı vs. Hastalıklı",
-         "Örneğin sağlıklı bir donörden mi yoksa patolojik inflamasyon/tümör taşıyan bir hastadan mı geldiğini doğrular.", C_TEAL),
-        ("Seviye 4b: Hastalık Arketipi", "4 Ana Klinik Kategori",
-         "1. Sağlıklı Kontrol  |  2. Akut Viral Enfeksiyon (COVID-19)  |  3. Otoimmün Nöro-İnflamasyon (MS)  |  4. Kanser / Malignite", C_PURPLE),
-        ("Seviye 4c: Malignite / Kanser Tespiti", "2 Sınıf: Kanser Değil vs. Malign Kanser",
-         "Hastalığın kesin onkolojik tümör hücresi olup olmadığını %99.95 doğrulukla belirler.", C_RED),
-        ("Seviye 4d: 11 Kanser Varyantı (Organ Kökeni)", "11 Pan-Kanser Moleküler Varyantı",
-         "Non-Cancer, Akciğer (LUAD), A549, Kronik Miyeloid Lösemi (CML), Böbrek (RCC), Rahim (UCEC), Özofagus (ESCA), Miyelom (MYE), Tiroid (THCA), Yumurtalık (OV), Pankreas (PAAD).", C_BLUE),
-        ("Seviye 4d-Ek: Kanser Kök Hücresi (CSC)", "2 Sınıf: CSC- Negatif vs. CSC+ POZİTİF",
-         "CD44, ALDH1A1 ve CytoTRACE entropisi ile nüks ve kemoterapi direnci potansiyeli yüksek kök hücre karakterini (%98.16 doğruluk) saptar.", C_RED),
+        ("Seviye 1: Hucre Tipi (Cell Type)", "14 Temel Biyolojik Sinif",
+         "Malign Kanser Hucresi, T Lenfosit, B Lenfosit, Makrofaj/Monosit, Epitelyal Hucre, Noron, Astrosit, Oligodendrosit, Fibroblast, Endotel vb.", C_BLUE),
+        ("Seviye 4a: Genel Saglik Durumu", "2 Sinif: Saglikli vs. Hastalikli",
+         "Saglikli bir donorden mi yoksa patolojik inflamasyon/tumor tasiyan bir hastadan mi geldigini dogrular.", C_TEAL),
+        ("Seviye 4b: Hastalik Arketipi", "4 Ana Klinik Kategori",
+         "1. Saglikli Kontrol | 2. Akut Viral Enfeksiyon (COVID-19) | 3. Otoimmun Noro-Inflamasyon (MS) | 4. Kanser / Malignite", C_PURPLE),
+        ("Seviye 4c: Malignite / Kanser Tespiti", "2 Sinif: Kanser Degil vs. Malign Kanser",
+         "Hastaligin kesin onkolojik tumor hucresi olup olmadigini %99.95 dogrulukla belirler.", C_RED),
+        ("Seviye 4d: 11 Kanser Varyanti (Organ Kokeni)", "11 Pan-Kanser Molekuler Varyanti",
+         "Non-Cancer, Akciger (LUAD), A549, Kronik Miyeloid Losemi (CML), Bobrek (RCC), Rahim (UCEC), Ozofagus (ESCA), Miyelom (MYE), Tiroid (THCA), Yumurtalik (OV), Pankreas (PAAD).", C_BLUE),
+        ("Seviye 4d-Ek: Kanser Kok Hucresi (CSC)", "2 Sinif: CSC- Negatif vs. CSC+ POZITIF",
+         "CD44, ALDH1A1 ve CytoTRACE entropisi ile nuks ve kemoterapi direnci potansiyeli yuksek kok hucre karakterini (%98.16 dogruluk) saptar.", C_RED),
     ]
 
     for idx, (l_title, l_sub, l_desc, l_col) in enumerate(levels):
@@ -395,7 +350,6 @@ def create_deck(output_path: str):
         l_y = Inches(1.45) + r * Inches(1.75)
 
         add_card(s5, l_x, l_y, Inches(5.75), Inches(1.6), title=l_title, subtitle=l_sub)
-        # Yan çizgi
         bar = s5.shapes.add_shape(MSO_SHAPE.RECTANGLE, l_x, l_y, Inches(0.08), Inches(1.6))
         bar.fill.solid()
         bar.fill.fore_color.rgb = l_col
@@ -406,42 +360,37 @@ def create_deck(output_path: str):
         tf.word_wrap = True
         tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
         p = tf.paragraphs[0]
-        p.text = l_desc
-        p.font.size = Pt(9.5)
-        p.font.color.rgb = C_NAVY_DARK
+        add_run_text(p, l_desc, 9.5, color=C_NAVY_DARK)
 
 
     # =========================================================================
     # SLIDE 6: VERİ SETİ VE ÖZELLİK MÜHENDİSLİĞİ
     # =========================================================================
     s6 = prs.slides.add_slide(blank_layout)
-    add_header(s6, "Çok Dokulu Birleşik Veri Seti ve Özellik Mühendisliği", slide_num=6)
+    add_header(s6, "Cok Dokulu Birlesik Veri Seti ve Ozellik Muhendisligi", slide_num=6)
 
-    # İstatistik Kutuları
-    add_stat_box(s6, Inches(0.8), Inches(1.45), Inches(2.7), Inches(1.2), "38,263", "Toplam Hücre & Doku", C_BLUE)
-    add_stat_box(s6, Inches(3.8), Inches(1.45), Inches(2.7), Inches(1.2), "8,486", "Görülmemiş Test Hücresi", C_TEAL)
-    add_stat_box(s6, Inches(6.8), Inches(1.45), Inches(2.7), Inches(1.2), "512", "Master Tanı Gen Paneli", C_PURPLE)
+    add_stat_box(s6, Inches(0.8), Inches(1.45), Inches(2.7), Inches(1.2), "38,263", "Toplam Hucre ve Doku", C_BLUE)
+    add_stat_box(s6, Inches(3.8), Inches(1.45), Inches(2.7), Inches(1.2), "8,486", "Gorulmemis Test Hucresi", C_TEAL)
+    add_stat_box(s6, Inches(6.8), Inches(1.45), Inches(2.7), Inches(1.2), "512", "Master Tani Gen Paneli", C_PURPLE)
     add_stat_box(s6, Inches(9.8), Inches(1.45), Inches(2.7), Inches(1.2), "16", "Biyolojik Yolak Skoru", C_RED)
 
-    # Sol Kart: Veri Seti Bölünmesi
     add_card(s6, Inches(0.8), Inches(2.85), Inches(5.7), Inches(4.0),
-             title="📊 Katı Veri Bölünmesi (No Data-Leakage)",
-             subtitle="Eğitim, Doğrulama ve Dış Test Kümeleri")
+             title="Kati Veri Bolunmesi (No Data-Leakage)",
+             subtitle="Egitim, Dogrulama ve Dis Test Kumeleri")
     add_bullet_points(s6, Inches(1.05), Inches(3.6), Inches(5.2), Inches(3.1), [
-        "• Eğitim Seti (Train): 25,791 Örnek (%67.4)",
-        "• Doğrulama Seti (Validation): 3,986 Örnek (%10.4) — Erken durdurma ve hiperparametre optimizasyonu.",
-        "• Dış Test Seti (Unseen Test): 8,486 Örnek (%22.2) — Modelin eğitimde hiç görmediği hücre ve hastalar.",
-        "• Modalite Dağılımı: 33,943 tekil hücre (scRNA-seq) + 4,320 Dirichlet ağırlıklı sentetik biyopsi (Bulk RNA-seq)."
+        "- Egitim Seti (Train): 25,791 Ornek (%67.4)",
+        "- Dogrulama Seti (Validation): 3,986 Ornek (%10.4) - Erken durdurma ve hiperparametre optimizasyonu.",
+        "- Dis Test Seti (Unseen Test): 8,486 Ornek (%22.2) - Modelin egitimde hic gormedigi hucre ve hastalar.",
+        "- Modalite Dagilimi: 33,943 tekil hucre (scRNA-seq) + 4,320 Dirichlet agirlikli sentetik biyopsi (Bulk RNA-seq)."
     ])
 
-    # Sağ Kart: 16 Biyolojik Yolak
     add_card(s6, Inches(6.8), Inches(2.85), Inches(5.7), Inches(4.0),
-             title="🧪 16 Biyolojik Yolak İmzası (Feature Engineering)",
-             subtitle="Moleküler Sapmaları Özetleyen Z-Skorları")
+             title="16 Biyolojik Yolak Imzasi (Feature Engineering)",
+             subtitle="Molekuler Sapmalari Ozetleyen Z-Skorlari")
     add_bullet_points(s6, Inches(7.05), Inches(3.6), Inches(5.2), Inches(3.1), [
-        "• Kanser ve Kök Hücre: CSC Stemness, Proliferasyon (MKI67/TOP2A), EMT Metastaz (VIM/SNAI1), Hipoksi (HIF1A/LDHA).",
-        "• İmmün & İnflamasyon: Viral Yanıt (ISG15/IFIT1), MS Nöro-İnflamasyon (GFAP/APOE), Makrofaj SPP1 & C1QC İmzaları, T-Hücre Tükenmişliği.",
-        "• Soy ve Kararsızlık: Epitelyal, Nöral/Glial, Hematopoietik soylar, CytoTRACE Kök Hücre Entropisi ve Kromozomal CNV Kararsızlığı."
+        "- Kanser ve Kok Hucre: CSC Stemness, Proliferasyon (MKI67/TOP2A), EMT Metastaz (VIM/SNAI1), Hipoksi (HIF1A/LDHA).",
+        "- Immun ve Inflamasyon: Viral Yanit (ISG15/IFIT1), MS Noro-Inflamasyon (GFAP/APOE), Makrofaj SPP1 & C1QC Imzalari, T-Hucre Tukenmisligi.",
+        "- Soy ve Kararsizlik: Epitelyal, Noral/Glial, Hematopoietik soylar, CytoTRACE Kok Hucre Entropisi ve Kromozomal CNV Kararsizligi."
     ])
 
 
@@ -449,82 +398,76 @@ def create_deck(output_path: str):
     # SLIDE 7: AÇIKLANABİLİR YAPAY ZEKA (XAI) VE INPUT X GRADIENT
     # =========================================================================
     s7 = prs.slides.add_slide(blank_layout)
-    add_header(s7, "Açıklanabilir Yapay Zeka (XAI) ve Karar Gerekçelendirme", slide_num=7)
+    add_header(s7, "Aciklanabilir Yapay Zeka (XAI) ve Karar Gerekcelendirme", slide_num=7)
 
-    # Sol Kart: XAI Metodolojisi
     add_card(s7, Inches(0.8), Inches(1.45), Inches(5.5), Inches(5.4),
-             title="🔍 Kara Kutu Engeli Nasıl Aşıldı?",
-             subtitle="Klinik Doğrulama İçin Matematiksel Atıf")
+             title="Kara Kutu Engeli Nasil Asildi?",
+             subtitle="Klinik Dogrulama Icin Matematiksel Atif")
     add_bullet_points(s7, Inches(1.05), Inches(2.3), Inches(5.0), Inches(4.3), [
-        "1. BiMamba Input × Gradient Atıfı:",
-        "   Modelin karar çıktılarından geriye doğru gradyan akıtılır. Her genin gradyan büyüklüğü ile ifade seviyesi çarpılarak salience (önem) skoru hesaplanır.",
-        "   Importance(g) = |x · ∂Loss/∂x| + 0.35 · (x / x_max)",
-        "2. Top-18 Biyobelirteç Gen Seçimi:",
-        "   Karara en yüksek etkiyi yapan ilk 18 gen anlık olarak sıralanır ve sağlıklı kontrol referansı ile karşılaştırılır.",
+        "1. BiMamba Input x Gradient Atifi:",
+        "   Modelin karar ciktilarindan geriye dogru gradyan akitilir. Her genin gradyan buyuklugu ile ifade seviyesi carpilarak salience skoru hesaplanir.",
+        "   Importance(g) = |x * dLoss/dx| + 0.35 * (x / x_max)",
+        "2. Top-18 Biyobelirtec Gen Secimi:",
+        "   Karara en yuksek etkiyi yapan ilk 18 gen anlik olarak siralanir ve saglikli kontrol referansi ile karsilastirilir.",
         "3. Kanser Prototip Benzerlik Matrisi:",
-        "   Gizli uzaydaki 11 kanser prototipi ile hastanın hücresi arasındaki Kosinüs Benzerliği [0, 100] aralığında ölçülür.",
-        "4. Biyolojik Anotasyon Sözlüğü:",
-        "   Model, her genin klinik fonksiyonunu (ör. CD44: Kök Hücre, MPO: Miyeloid Lösemi) hekimin anlayacağı dilde raporlar."
+        "   Gizli uzaydaki 11 kanser prototipi ile hastanin hucresi arasindaki Kosinus Benzerligi [0, 100] araliginda olculur.",
+        "4. Biyolojik Anotasyon Sozlugu:",
+        "   Model, her genin klinik fonksiyonunu (or. CD44: Kok Hucre, MPO: Miyeloid Losemi) hekimin anlayacagi dilde raporlar."
     ])
 
-    # Sağ Kart: XAI Şeması / Isı Haritası Alanı
     add_placeholder(s7, Inches(6.6), Inches(1.45), Inches(5.9), Inches(5.4),
-                    placeholder_title="XAI KARAR AĞIRLIKLARI VE PROTOTİP UYUM GRAFİĞİ",
-                    subtitle="Input x Gradient Gen Sıralaması & Kosinüs Benzerlik Çubukları")
+                    placeholder_title="XAI KARAR AGIRLIKLARI VE PROTOTIP UYUM GRAFIGI",
+                    subtitle="Input x Gradient Gen Siralamasi & Kosinus Benzerlik Cubuklari")
 
 
     # =========================================================================
     # SLIDE 8: 4-PANELLİ DİNAMİK TEŞHİS RAPORU (MASTER POSTER)
     # =========================================================================
     s8 = prs.slides.add_slide(blank_layout)
-    add_header(s8, "4-Panelli Dinamik Klinik Teşhis Raporu (Genel Bakış)", slide_num=8)
+    add_header(s8, "4-Panelli Dinamik Klinik Teshis Raporu (Genel Bakis)", slide_num=8)
 
-    # Sol Kolon: Panellerin Açıklaması
     add_card(s8, Inches(0.8), Inches(1.45), Inches(4.5), Inches(5.4),
-             title="📋 Master Raporun 4 Katmanı",
-             subtitle="3000x2025 px Yüksek Çözünürlüklü Vektörel Çıktı")
+             title="Master Raporun 4 Katmani",
+             subtitle="3000x2025 px Yuksek Cozunurluklu Cikti")
     add_bullet_points(s8, Inches(1.0), Inches(2.3), Inches(4.1), Inches(4.3), [
-        "• Panel A (Sol-Üst): Hiyerarşik Klinik Karar Ağacı & Kalibre Güven Yüzdeleri (%95 klinik hedef eşiği).",
-        "• Panel B (Sağ-Üst): Kararı Belirleyen Top-18 Biyobelirteç Geni ve XAI Isı Haritası (Magma renk paleti).",
-        "• Panel C (Sol-Alt): 11 Kanser Varyantı Prototip Örüntü Uyum Isı Haritası (YlOrRd renk paleti).",
-        "• Panel D (Sağ-Alt): 16 Biyolojik Yolak, Kök Hücre (CSC) ve Kromozomal CNV Isı Haritası (RdBu_r paleti).",
-        "• İndirilebilir Format: Tek tıkla HD PNG klinik arşiv çıktısı."
+        "- Panel A (Sol-Ust): Hiyerarsik Klinik Karar Agaci & Kalibre Guven Yuzdeleri (%95 klinik hedef esigi).",
+        "- Panel B (Sag-Ust): Karari Belirleyen Top-18 Biyobelirtec Geni ve XAI Isı Haritasi (Magma renk paleti).",
+        "- Panel C (Sol-Alt): 11 Kanser Varyanti Prototip Oruntu Uyum Isı Haritasi (YlOrRd renk paleti).",
+        "- Panel D (Sag-Alt): 16 Biyolojik Yolak, Kok Hucre (CSC) ve Kromozomal CNV Isı Haritasi (RdBu_r paleti).",
+        "- Indirilebilir Format: Tek tikla HD PNG klinik arsiv ciktisi."
     ])
 
-    # Sağ Kolon: [BÜYÜK ALAN] 4-Panelli Master Poster Alanı
     add_placeholder(s8, Inches(5.6), Inches(1.45), Inches(6.9), Inches(5.4),
-                    placeholder_title="4-PANELLİ BİRLEŞİK MASTER TEŞHİS POSTERİ (PANEL A + B + C + D)",
-                    subtitle="latest_diagnostic_report.png | 3000x2025 px HD Grafik Alanı")
+                    placeholder_title="4-PANELLI BIRLESIK MASTER TESHIS POSTERI (PANEL A + B + C + D)",
+                    subtitle="latest_diagnostic_report.png | 3000x2025 px HD Grafik Alani")
 
 
     # =========================================================================
     # SLIDE 9: PANEL A VE PANEL B DETAYLI İNCELEMESİ
     # =========================================================================
     s9 = prs.slides.add_slide(blank_layout)
-    add_header(s9, "Panel A (Teşhis / Güven) & Panel B (Top-18 Gen Heatmap)", slide_num=9)
+    add_header(s9, "Panel A (Teshis / Guven) & Panel B (Top-18 Gen Heatmap)", slide_num=9)
 
-    # Sol Bölüm: Panel A
     add_card(s9, Inches(0.8), Inches(1.45), Inches(5.7), Inches(2.2),
-             title="Panel A: Hiyerarşik Teşhis ve Kalibre Güven Çubukları",
-             subtitle="Modelin 6 Kademedeki Karar Kesinliği")
+             title="Panel A: Hiyerarsik Teshis ve Kalibre Guven Cubuklari",
+             subtitle="Modelin 6 Kademedeki Karar Kesinligi")
     add_bullet_points(s9, Inches(1.0), Inches(2.25), Inches(5.3), Inches(1.3), [
-        "• 6 aşamanın tamamı için tahmin edilen sınıf, gerçek etiket ve güven yüzdesi.",
-        "• %95 güven eşiği referans çizgisi. Yeşil çubuklar doğru, kırmızı çubuklar sapmayı gösterir."
+        "- 6 asamanin tamami icin tahmin edilen sinif, gercek etiket ve guven yuzdesi.",
+        "- %95 guven esigi referans cizgisi. Yesil cubuklar dogru, kirmizi cubuklar sapmayi gosterir."
     ])
     add_placeholder(s9, Inches(0.8), Inches(3.8), Inches(5.7), Inches(3.05),
-                    placeholder_title="PANEL A: HİYERARŞİK GÜVEN ÇUBUKLARI GRAFİĞİ",
-                    subtitle="fig_panel_a | Model Güven Dağılımı")
+                    placeholder_title="PANEL A: HIYERARSIK GUVEN CUBUKLARI GRAFIGI",
+                    subtitle="fig_panel_a | Model Guven Dagilimi")
 
-    # Sağ Bölüm: Panel B
     add_card(s9, Inches(6.8), Inches(1.45), Inches(5.7), Inches(2.2),
-             title="Panel B: Top-18 Biyobelirteç Gen Feature Heatmap'i",
-             subtitle="Hasta İfadesi vs. Sağlıklı ve Kanser Referansları")
+             title="Panel B: Top-18 Biyobelirtec Gen Feature Heatmap'i",
+             subtitle="Hasta Ifadesi vs. Saglikli ve Kanser Referanslari")
     add_bullet_points(s9, Inches(7.0), Inches(2.25), Inches(5.3), Inches(1.3), [
-        "• Karara en çok etki eden ilk 18 gen (CD44, ALDH1A1, EPCAM, MKI67 vb.).",
-        "• 4 Satırlı Isı Haritası: Hasta İfadesi | Eşleşen Ref | Sağlıklı Ref | BiMamba XAI Ağırlığı."
+        "- Karara en cok etki eden ilk 18 gen (CD44, ALDH1A1, EPCAM, MKI67 vb.).",
+        "- 4 Satirli Isı Haritasi: Hasta Ifadesi | Eslesen Ref | Saglikli Ref | BiMamba XAI Agirligi."
     ])
     add_placeholder(s9, Inches(6.8), Inches(3.8), Inches(5.7), Inches(3.05),
-                    placeholder_title="PANEL B: TOP-18 GEN FEATURE & XAI ISI HARİTASI",
+                    placeholder_title="PANEL B: TOP-18 GEN FEATURE & XAI ISI HARITASI",
                     subtitle="fig_panel_b | Magma Colormap Heatmap")
 
 
@@ -532,32 +475,30 @@ def create_deck(output_path: str):
     # SLIDE 10: PANEL C VE PANEL D DETAYLI İNCELEMESİ
     # =========================================================================
     s10 = prs.slides.add_slide(blank_layout)
-    add_header(s10, "Panel C (Varyant Benzerliği) & Panel D (16 Biyolojik Yolak)", slide_num=10)
+    add_header(s10, "Panel C (Varyant Benzerligi) & Panel D (16 Biyolojik Yolak)", slide_num=10)
 
-    # Sol Bölüm: Panel C
     add_card(s10, Inches(0.8), Inches(1.45), Inches(5.7), Inches(2.2),
-             title="Panel C: 11 Kanser Varyantı Prototip Örüntü Uyumu",
+             title="Panel C: 11 Kanser Varyanti Prototip Oruntu Uyumu",
              subtitle="Hangi Kansere Ne Derece Benziyor?")
     add_bullet_points(s10, Inches(1.0), Inches(2.25), Inches(5.3), Inches(1.3), [
-        "• Hastanın hücre profilinin 11 kanser tipi ile kosinüs benzerliği matrisi.",
-        "• 2 Satır: Model Tahmin Olasılığı (%) ve Prototip Örüntü Benzerliği (%).",
-        "• Metastatik ve primer ayrımında organ kökeni doğrulaması sağlar."
+        "- Hastanin hucre profilinin 11 kanser tipi ile kosinus benzerligi matrisi.",
+        "- 2 Satir: Model Tahmin Olasiligi (%) ve Prototip Oruntu Benzerligi (%).",
+        "- Metastatik ve primer ayriminda organ kokeni dogrulamasi saglar."
     ])
     add_placeholder(s10, Inches(0.8), Inches(3.8), Inches(5.7), Inches(3.05),
-                    placeholder_title="PANEL C: 11 KANSER VARYANTI ÖRÜNTÜ UYUM ISI HARİTASI",
+                    placeholder_title="PANEL C: 11 KANSER VARYANTI ORUNTU UYUM ISI HARITASI",
                     subtitle="fig_panel_c | YlOrRd Colormap Heatmap")
 
-    # Sağ Bölüm: Panel D
     add_card(s10, Inches(6.8), Inches(1.45), Inches(5.7), Inches(2.2),
-             title="Panel D: 16 Biyolojik Yolak & Kök Hücre (CSC) İmzaları",
-             subtitle="Fonksiyonel Hücresel Durum Sapmaları")
+             title="Panel D: 16 Biyolojik Yolak & Kok Hucre (CSC) Imzalari",
+             subtitle="Fonksiyonel Hucresel Durum Sapmalari")
     add_bullet_points(s10, Inches(7.0), Inches(2.25), Inches(5.3), Inches(1.3), [
-        "• 16 yolağın Z-skor sapması (+1.5 Z üzeri patolojik yüksek, -1.5 Z altı baskılanmış).",
-        "• Kök Hücre (CSC), Proliferasyon, EMT Metastaz ve Viral ISG aktivasyon seviyeleri.",
-        "• İkinci satırda BiMamba'nın o yolağa verdiği karar önemi gösterilir."
+        "- 16 yolagin Z-skor sapmasi (+1.5 Z uzeri patolojik yuksek, -1.5 Z alti baskilanmis).",
+        "- Kok Hucre (CSC), Proliferasyon, EMT Metastaz ve Viral ISG aktivasyon seviyeleri.",
+        "- Ikinci satirda BiMamba'nin o yolaga verdigi karar onemi gosterilir."
     ])
     add_placeholder(s10, Inches(6.8), Inches(3.8), Inches(5.7), Inches(3.05),
-                    placeholder_title="PANEL D: 16 YOLAK & CSC İMZA ISI HARİTASI",
+                    placeholder_title="PANEL D: 16 YOLAK & CSC IMZA ISI HARITASI",
                     subtitle="fig_panel_d | RdBu_r Diverging Colormap Heatmap")
 
 
@@ -565,58 +506,55 @@ def create_deck(output_path: str):
     # SLIDE 11: BULUT ALTYAPISI - KAGGLE 2X T4 GPU KÖPRÜSÜ
     # =========================================================================
     s11 = prs.slides.add_slide(blank_layout)
-    add_header(s11, "Hibrit Bulut Altyapısı: Kaggle 2x Tesla T4 GPU Köprüsü", slide_num=11)
+    add_header(s11, "Hibrit Bulut Altyapisi: Kaggle 2x Tesla T4 GPU Koprusu", slide_num=11)
 
     add_card(s11, Inches(0.8), Inches(1.45), Inches(5.5), Inches(5.4),
-             title="☁️ Sıfır Maliyetli Hibrit Hesaplama Altyapısı",
-             subtitle="Yerel Masaüstü ile Kaggle 2x T4 Entegrasyonu")
+             title="Sifir Maliyetli Hibrit Hesaplama Altyapisi",
+             subtitle="Yerel Masaustu ile Kaggle 2x T4 Entegrasyonu")
     add_bullet_points(s11, Inches(1.05), Inches(2.3), Inches(5.0), Inches(4.3), [
-        "• Kaggle GPU Daemon (2x Tesla T4, 32 GB VRAM):",
-        "   Arka planda çalışan Python HTTP sunucusu ve Cloudflare tüneli otomatik olarak ayağa kalkar.",
-        "• Cloudflare HTTPS Tüneli:",
-        "   Dinamik HTTPS tüneli ntfy.sh bildirim protokolüyle yerel bilgisayara bağlanır.",
-        "• Sıfır Kota İsrafı (Zero Quota Waste):",
-        "   - 'python kaggle_ctl.py up': Sunucuyu açar (60-90 sn).",
-        "   - 'python kaggle_ctl.py status': 30 saatlik GPU kotasını canlı sorgular.",
-        "   - 'python kaggle_ctl.py down': Sunucuyu kapatıp kota sayacını durdurur.",
-        "• Güvenlik:",
-        "   256-bit X-Auth-Token yetkilendirme başlığı ile yetkisiz erişimler engellenir."
+        "- Kaggle GPU Daemon (2x Tesla T4, 32 GB VRAM):",
+        "  Arka planda calisan Python HTTP sunucusu ve Cloudflare tuneli otomatik olarak ayaga kalkar.",
+        "- Cloudflare HTTPS Tuneli:",
+        "  Dinamik HTTPS tuneli ntfy.sh bildirim protokoluyle yerel bilgisayara baglanir.",
+        "- Sifir Kota Israfi (Zero Quota Waste):",
+        "  * 'python kaggle_ctl.py up': Sunucuyu acar (60-90 sn).",
+        "  * 'python kaggle_ctl.py status': 30 saatlik GPU kotasini canli sorgular.",
+        "  * 'python kaggle_ctl.py down': Sunucuyu kapatip kota sayacini durdurur.",
+        "- Guvenlik:",
+        "  256-bit X-Auth-Token yetkilendirme basligi ile yetkisiz erisimler engellenir."
     ])
 
     add_placeholder(s11, Inches(6.6), Inches(1.45), Inches(5.9), Inches(5.4),
-                    placeholder_title="KAGGLE 2X T4 GPU & CLOUDFLARE TÜNEL ŞEMASI",
-                    subtitle="Yerel Arayüz -> Cloudflare Tünel -> Kaggle Daemon -> 2x Tesla T4")
+                    placeholder_title="KAGGLE 2X T4 GPU & CLOUDFLARE TUNEL SEMASI",
+                    subtitle="Yerel Arayuz -> Cloudflare Tunel -> Kaggle Daemon -> 2x Tesla T4")
 
 
     # =========================================================================
     # SLIDE 12: DENEYSEL SONUÇLAR VE PERFORMANS METRİKLERİ
     # =========================================================================
     s12 = prs.slides.add_slide(blank_layout)
-    add_header(s12, "Deneysel Sonuçlar ve Performans Metrikleri (N=8,486 Test Hücresi)", slide_num=12)
+    add_header(s12, "Deneysel Sonuclar ve Performans Metrikleri (N=8,486 Test Hucresi)", slide_num=12)
 
-    # 4 Büyük Metrik Kartı
-    add_stat_box(s12, Inches(0.8), Inches(1.45), Inches(2.7), Inches(1.2), "%98.11", "Birleşik Ortalama Doğruluk", C_TEAL)
-    add_stat_box(s12, Inches(3.8), Inches(1.45), Inches(2.7), Inches(1.2), "%99.95", "Kanser / Malignite Doğruluğu", C_RED)
-    add_stat_box(s12, Inches(6.8), Inches(1.45), Inches(2.7), Inches(1.2), "%98.16", "Kanser Kök Hücresi (CSC)", C_PURPLE)
-    add_stat_box(s12, Inches(9.8), Inches(1.45), Inches(2.7), Inches(1.2), "%0.45", "Kalibrasyon Hatası (ECE)", C_BLUE)
+    add_stat_box(s12, Inches(0.8), Inches(1.45), Inches(2.7), Inches(1.2), "%98.11", "Birlesik Ortalama Dogruluk", C_TEAL)
+    add_stat_box(s12, Inches(3.8), Inches(1.45), Inches(2.7), Inches(1.2), "%99.95", "Kanser / Malignite Dogrulugu", C_RED)
+    add_stat_box(s12, Inches(6.8), Inches(1.45), Inches(2.7), Inches(1.2), "%98.16", "Kanser Kok Hucresi (CSC)", C_PURPLE)
+    add_stat_box(s12, Inches(9.8), Inches(1.45), Inches(2.7), Inches(1.2), "%0.45", "Kalibrasyon Hatasi (ECE)", C_BLUE)
 
-    # Sol Kart: Görev Bazlı Detay Tablosu
     add_card(s12, Inches(0.8), Inches(2.85), Inches(6.2), Inches(4.0),
-             title="📈 Görev Bazlı Test Metrikleri",
-             subtitle="Eğitimde Hiç Görülmemiş 8,486 Test Hücresi")
+             title="Gorev Bazli Test Metrikleri",
+             subtitle="Egitimde Hic Gorulmemis 8,486 Test Hucresi")
     add_bullet_points(s12, Inches(1.05), Inches(3.6), Inches(5.7), Inches(3.1), [
-        "• 4c. Malign Kanser Tespiti: %99.95 Doğruluk | ROC-AUC: 1.000 | ECE: %0.04",
-        "• 4a. Sağlık Durumu (Normal vs Hasta): %98.52 Doğruluk | ROC-AUC: 0.998",
-        "• 4b. Hastalık Arketipi (4 Sınıf): %98.46 Doğruluk | ROC-AUC: 0.998",
-        "• 4d-Ek. Kanser Kök Hücresi (CSC): %98.16 Doğruluk | ROC-AUC: 0.998",
-        "• 4d. 11 Kanser Varyantı: %97.23 Doğruluk | ROC-AUC: 0.997",
-        "• 1. 14 Hücre Tipi: %96.37 Doğruluk | ROC-AUC: 0.999",
-        "• Modalite Kıyaslaması: Tek-Hücre: %97.92  |  Doku (Bulk RNA): %99.70"
+        "- 4c. Malign Kanser Tespiti: %99.95 Dogruluk | ROC-AUC: 1.000 | ECE: %0.04",
+        "- 4a. Saglik Durumu (Normal vs Hasta): %98.52 Dogruluk | ROC-AUC: 0.998",
+        "- 4b. Hastalik Arketipi (4 Sinif): %98.46 Dogruluk | ROC-AUC: 0.998",
+        "- 4d-Ek. Kanser Kok Hucresi (CSC): %98.16 Dogruluk | ROC-AUC: 0.998",
+        "- 4d. 11 Kanser Varyanti: %97.23 Dogruluk | ROC-AUC: 0.997",
+        "- 1. 14 Hucre Tipi: %96.37 Dogruluk | ROC-AUC: 0.999",
+        "- Modalite Kiyaslamasi: Tek-Hucre: %97.92 | Doku (Bulk RNA): %99.70"
     ])
 
-    # Sağ Alan: Karışıklık Matrisi Placeholder
     add_placeholder(s12, Inches(7.3), Inches(2.85), Inches(5.2), Inches(4.0),
-                    placeholder_title="KARIŞIKLIK MATRİSİ (CONFUSION MATRIX) & ROC-AUC",
+                    placeholder_title="KARISIKLIK MATRISI (CONFUSION MATRIX) & ROC-AUC",
                     subtitle="faz8_ab_benchmark_and_confusion.png | 11 Varyant Hata Matrisi")
 
 
@@ -624,65 +562,63 @@ def create_deck(output_path: str):
     # SLIDE 13: İNTERAKTİF TEST TEZGAHI (STREAMLIT APP.PY)
     # =========================================================================
     s13 = prs.slides.add_slide(blank_layout)
-    add_header(s13, "İnteraktif Karar Destek ve Test Tezgahı (Streamlit Web Dashboard)", slide_num=13)
+    add_header(s13, "Interaktif Karar Destek ve Test Tezgahi (Streamlit Web Dashboard)", slide_num=13)
 
     add_card(s13, Inches(0.8), Inches(1.45), Inches(5.5), Inches(5.4),
-             title="🖥️ Klinisyen ve Araştırmacı Arayüzü",
-             subtitle="app.py & app.bat Üzerinden Canlı Deneyler")
+             title="Klinisyen ve Arastirmaci Arayuzu",
+             subtitle="app.py & app.bat Uzerinden Canli Deneyler")
     add_bullet_points(s13, Inches(1.05), Inches(2.3), Inches(5.0), Inches(4.3), [
-        "1. Rastgele Test Hücresi Örnekleyici:",
-        "   8,486 görülmemiş test hücresi içinden tek tıkla kategori bazlı (CSC+, Kanser, Sağlıklı vb.) hücre çeker.",
-        "2. Canlı Pseudo-Bulk Biyopsi Sentezleyici:",
-        "   5-80 arası hücreyi Dirichlet dağılımı ile harmanlayarak yapay heterojen tümör dokusu üretir.",
-        "3. Gerçek Etiket (Ground-Truth) Karşılaştırma Kartları:",
-        "   Model tahmini ile gerçek laboratuvar etiketini yan yana yeşil/kırmızı rozetlerle doğrular.",
+        "1. Rastgele Test Hucresi Ornekleyici:",
+        "   8,486 gorulmemis test hucresi icinden tek tikla kategori bazli (CSC+, Kanser, Saglikli vb.) hucre ceker.",
+        "2. Canli Pseudo-Bulk Biyopsi Sentezleyici:",
+        "   5-80 arasi hucreyi Dirichlet dagilimi ile harmanlayarak yapay heterojen tumor dokusu uretir.",
+        "3. Gercek Etiket (Ground-Truth) Karsilastirma Kartlari:",
+        "   Model tahmini ile gercek laboratuvar etiketini yan yana dogrular.",
         "4. Toplu Stres Testi (Batch Validation):",
-        "   20, 50, 100 veya 200 hücrelik grubu tek seferde test edip anlık başarı metrikleri üretir.",
+        "   20, 50, 100 veya 200 hucrelik grubu tek seferde test edip anlik basari metrikleri uretir.",
         "5. Inline Base64 Render Motoru:",
-        "   Starlette ASGI çakışmalarını engelleyen sıfır-medya-hatası HTML-DOM grafik motoru."
+        "   Starlette ASGI cakismalarini engelleyen sifir-medya-hatasi HTML-DOM grafik motoru."
     ])
 
     add_placeholder(s13, Inches(6.6), Inches(1.45), Inches(5.9), Inches(5.4),
-                    placeholder_title="STREAMLIT WEB ARAYÜZÜ EKRAN GÖRÜNTÜSÜ",
-                    subtitle="http://localhost:8501 | Karar Tezgahı Arayüz Görseli")
+                    placeholder_title="STREAMLIT WEB ARAYUZU EKRAN GORUNTUSU",
+                    subtitle="http://localhost:8501 | Karar Tezgahi Arayuz Gorseli")
 
 
     # =========================================================================
     # SLIDE 14: İŞ PAKETİ DURUMU VE GELECEK ÇALIŞMALAR
     # =========================================================================
     s14 = prs.slides.add_slide(blank_layout)
-    add_header(s14, "İş Paketi İlerleme Durumu ve Final Teslim Yol Haritası", slide_num=14)
+    add_header(s14, "Is Paketi Ilerleme Durumu ve Final Teslim Yol Haritasi", slide_num=14)
 
-    # Sol Kart: Tamamlanan İş Paketleri (Ara Rapor)
     add_card(s14, Inches(0.8), Inches(1.45), Inches(5.7), Inches(5.4),
-             title="✅ Tamamlanan Aşamalar (Ara Rapor Dönemi)",
-             subtitle="Faz 1 - Faz 8 Arası Tüm Hedefler Gerçekleştirildi")
+             title="Tamamlanan Asamalar (Ara Rapor Donemi)",
+             subtitle="Faz 1 - Faz 8 Arasi Tum Hedefler Gerceklestirildi")
     add_bullet_points(s14, Inches(1.05), Inches(2.3), Inches(5.2), Inches(4.3), [
-        "• İP-1: Veri Tabanı ve Çoklu-Doku Entegrasyonu (%100 Tamamlandı)",
-        "   38,263 örnek, 14 hücre tipi, 11 kanser varyantı standartlaştırıldı.",
-        "• İP-2: scMamba2 Backbone ve BiMamba Eğitimi (%100 Tamamlandı)",
-        "   State-space mimarisi ve multi-task loss ile %98.11 başarıya ulaşıldı.",
-        "• İP-3: XAI ve 4-Panelli Isı Haritası Motoru (%100 Tamamlandı)",
-        "   Input × Gradient atıfı ve vektörel poster üretimi doğrulandı.",
-        "• İP-4: Kaggle GPU Köprüsü ve Streamlit Tezgahı (%100 Tamamlandı)",
-        "   Cloudflare tüneli ve interaktif karar tezgahı canlıya alındı.",
-        "• İP-5: Açık Kaynak GitHub Yedeklemesi (%100 Tamamlandı)",
-        "   Tüm kodlar, ağırlıklar ve raporlar GitHub üzerinde arşivlendi."
+        "- IP-1: Veri Tabani ve Coklu-Doku Entegrasyonu (%100 Tamamlandi)",
+        "  38,263 ornek, 14 hucre tipi, 11 kanser varyanti standartlastirildi.",
+        "- IP-2: scMamba2 Backbone ve BiMamba Egitimi (%100 Tamamlandi)",
+        "  State-space mimarisi ve multi-task loss ile %98.11 basariya ulasildi.",
+        "- IP-3: XAI ve 4-Panelli Isı Haritasi Motoru (%100 Tamamlandi)",
+        "  Input x Gradient atifi ve vektorel poster uretimi dogrulandi.",
+        "- IP-4: Kaggle GPU Koprusu ve Streamlit Tezgahi (%100 Tamamlandi)",
+        "  Cloudflare tuneli ve interaktif karar tezgahi canliya alindi.",
+        "- IP-5: Acik Kaynak GitHub Yedeklemesi (%100 Tamamlandi)",
+        "  Tum kodlar, agirliklar ve raporlar GitHub uzerinde arsivlendi."
     ])
 
-    # Sağ Kart: Gelecek Çalışmalar (Final Dönemi)
     add_card(s14, Inches(6.8), Inches(1.45), Inches(5.7), Inches(5.4),
-             title="🔮 Final Dönemi Hedefleri (Gelecek Çalışmalar)",
-             subtitle="Klinik Etkiyi Artıracak Ek Geliştirmeler")
+             title="Gelecek Calismalar (Final Donemi)",
+             subtitle="Klinik Etkiyi Artiracak Ek Gelistirmeler")
     add_bullet_points(s14, Inches(7.05), Inches(2.3), Inches(5.2), Inches(4.3), [
         "1. Mekansal Transkriptomik (Spatial Transcriptomics):",
-        "   10x Visium / Xenium verileri entegre edilerek tümör ve CSC hücreleri 2D/3D doku koordinatlarında haritalanacak.",
-        "2. Kemoterapi ve İlaç Yanıtı Tahmini (Drug Sensitivity):",
-        "   GDSC / PRISM veri tabanlarıyla model birleştirilerek tespit edilen kanser varyantına en etkili kemoterapötik ajanlar önerilecek.",
-        "3. Dış Bağımsız Kohort Doğrulaması:",
-        "   TCGA ve CELLxGENE üzerinden yeni hasta gruplarında genelleştirilebilirlik testleri genişletilecek.",
+        "   10x Visium / Xenium verileri entegre edilerek tumor ve CSC hucreleri 2D/3D doku koordinatlarinda haritalanacak.",
+        "2. Kemoterapi ve Ilac Yaniti Tahmini (Drug Sensitivity):",
+        "   GDSC / PRISM veri tabanlariyla model birlestirilerek tespit edilen kanser varyantina en etkili kemoterapotik ajanlar onerilecek.",
+        "3. Dis Bagimsiz Kohort Dogrulamasi:",
+        "   TCGA ve CELLxGENE uzerinden yeni hasta gruplarinda genellestirilebilirlik testleri genisletilecek.",
         "4. Akademik Bildiri / Makale:",
-        "   Elde edilen mimari yenilik ve %98.11'lik başarım uluslararası bir konferans bildirisine dönüştürülecek."
+        "   Elde edilen mimari yenilik ve %98.11'lik basarim uluslararasi bir konferans bildirisine donusturulecek."
     ])
 
 
@@ -692,7 +628,6 @@ def create_deck(output_path: str):
     s15 = prs.slides.add_slide(blank_layout)
     set_slide_bg(s15, C_NAVY_DARK)
 
-    # Alt çizgi
     deco = s15.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, Inches(7.35), prs.slide_width, Inches(0.15))
     deco.fill.solid()
     deco.fill.fore_color.rgb = C_TEAL
@@ -701,20 +636,14 @@ def create_deck(output_path: str):
     tb = s15.shapes.add_textbox(Inches(1.0), Inches(1.3), Inches(11.3), Inches(1.0))
     tf = tb.text_frame
     p = tf.paragraphs[0]
-    p.text = "TEŞEKKÜR EDERİM"
     p.alignment = PP_ALIGN.CENTER
-    p.font.size = Pt(38)
-    p.font.bold = True
-    p.font.color.rgb = C_TEXT_LIGHT
+    add_run_text(p, "TESEKKUR EDERIM", 38, color=C_TEXT_LIGHT, bold=True)
 
     p2 = tf.add_paragraph()
-    p2.text = "Sorularınız ve Katkılarınız İçin Hazırım"
     p2.alignment = PP_ALIGN.CENTER
-    p2.font.size = Pt(16)
-    p2.font.color.rgb = C_BLUE
+    add_run_text(p2, "Sorulariniz ve Katkilariniz Icin Hazirim", 16, color=C_BLUE)
     p2.space_before = Pt(8)
 
-    # Kart
     q_card = s15.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(2.0), Inches(3.0), Inches(9.33), Inches(3.5))
     q_card.fill.solid()
     q_card.fill.fore_color.rgb = C_NAVY_MED
@@ -725,40 +654,28 @@ def create_deck(output_path: str):
     tfq.word_wrap = True
 
     p = tfq.paragraphs[0]
-    p.text = "📌 Proje Başlığı:"
-    p.font.size = Pt(11)
-    p.font.color.rgb = C_TEXT_MUTED
+    add_run_text(p, "[Proje Basligi]:", 11, color=C_TEXT_MUTED)
     p_sub = tfq.add_paragraph()
-    p_sub.text = "scMamba2 + BiMamba ile Hiyerarşik Klinik Teşhis ve Açıklanabilir Yapay Zeka Sistemi"
-    p_sub.font.size = Pt(13)
-    p_sub.font.bold = True
-    p_sub.font.color.rgb = C_TEXT_LIGHT
+    add_run_text(p_sub, "scMamba2 + BiMamba ile Hiyerarsik Klinik Teshis ve Aciklanabilir Yapay Zeka Sistemi", 13, color=C_TEXT_LIGHT, bold=True)
     p_sub.space_after = Pt(12)
 
     p = tfq.add_paragraph()
-    p.text = "👤 Hazırlayan: Mithat Yasin Çeliktaş"
-    p.font.size = Pt(12)
-    p.font.bold = True
-    p.font.color.rgb = C_TEXT_LIGHT
+    add_run_text(p, "Hazirlayan: Mithat Yasin Celiktas", 12, color=C_TEXT_LIGHT, bold=True)
     p.space_after = Pt(10)
 
     p = tfq.add_paragraph()
-    p.text = "🔗 GitHub Deposu: https://github.com/MithatYasinCeliktas/tasarimProje"
-    p.font.size = Pt(11.5)
-    p.font.color.rgb = C_BLUE
+    add_run_text(p, "GitHub Deposu: https://github.com/MithatYasinCeliktas/tasarimProje", 11.5, color=C_BLUE)
     p.space_after = Pt(10)
 
     p = tfq.add_paragraph()
-    p.text = "📊 Canlı Demo: streamlit run app.py (Yerel Test Portu: 8501)"
-    p.font.size = Pt(11.5)
-    p.font.color.rgb = C_TEAL
+    add_run_text(p, "Canli Demo: streamlit run app.py (Yerel Test Portu: 8501)", 11.5, color=C_TEAL)
 
     # Kaydet
     output_dir = Path(output_path).parent
     output_dir.mkdir(parents=True, exist_ok=True)
     prs.save(output_path)
-    print(f"Sunum başarıyla oluşturuldu: {output_path}")
+    print(f"Sunum basariyla olusturuldu: {output_path}")
 
 if __name__ == "__main__":
-    out_file = r"c:\Users\mitha\Desktop\tasarımProje\scMamba2_BiMamba_Proje_Tasarim_Ara_Raporu_Sunumu.pptx"
+    out_file = r"scMamba2_BiMamba_Proje_Tasarim_Ara_Raporu_Sunumu.pptx"
     create_deck(out_file)
